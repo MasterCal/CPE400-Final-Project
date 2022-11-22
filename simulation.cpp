@@ -14,14 +14,26 @@ class Router
     double linkFailure = 0.05;
 };
 
-void initNetwork()
+class Packet
+{
+    int size;
+    bool fragmentable;
+    bool requiresACK;
+};
+
+void InitNetwork()
 {
  // set up routers and connections
 }
 
+void CreateRouteTables()
+{
+    
+}
+
 int main()
 {
-    initNetwork();
+    InitNetwork();
 
     return 0;
 }
