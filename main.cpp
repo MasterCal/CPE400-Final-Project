@@ -1,7 +1,5 @@
 #inclue "network.cpp"
 
-using namespace std;
-
 int main() {
 	Network newNet;
 

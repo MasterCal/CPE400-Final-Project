@@ -3,28 +3,9 @@
 
 #include <vector>
 #include <iostream>
+#include <climits>
+#include "router.cpp"
 using namespace std;
-
-struct Router;	//forward declaration
-
-struct RouterLink{
-	Router* connectedRouter;
-	int weight;
-};
-
-struct Router {
-	int numConnections = 0;
-	vector<RouterLink*> connections;	//This represents the edges of the graph
-	int bufferSize = 4096;
-	int bufferDelay = 100;
-	int propagationDelay = 1;
-	int transmissionDelay = 2;
-	//made the fail chance an int, as int math is a little more stable and 
-	//	can work a little more efficiently.
-	int failChance = 0.05;
-	//double failChance = 0.05;
-	bool isRunning = true;
-};
 
 struct Packet {
 	int size;
@@ -42,7 +23,9 @@ class Network {
 
 		//Simulation
 	private:
+		int graphSize = 8
+		int inf = INT_MAX;
 		vector<Routers*> routerNetwork;		// to track/modify the routers
-		vector<vector<int>> *weightGraph;	//2D graph weight table
+		int weightGraph[graphSize][graphSize];	//2D graph weight table
 };
 #endif
