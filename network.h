@@ -19,12 +19,13 @@ class Network {
 		~Network();
 
 		//void InitNetwork();	// class constructor will do this
-		void CreateRouteTables();
+		void CreateRouteTable();
+		void UpdateGraph();
 
-		//Simulation
+		//int Simulation();
 	private:
 		int graphSize = 8
-		int inf = INT_MAX;
+		int infinity = INT_MAX;
 		vector<Routers*> routerNetwork;		// to track/modify the routers
 		int weightGraph[graphSize][graphSize];	//2D graph weight table
 };
