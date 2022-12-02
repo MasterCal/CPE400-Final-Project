@@ -21,7 +21,6 @@ class Router{
 		~Router();
 
 		void AddLink(Router* outRouter, int outWeight, bool loopCheck);
-		//int GetLinkWeight(Router* outRouter);
 		int RandEdgeWeight(Router* outRouter);
 		void UpdateEdgeWeight(Router* outRouter, int newWeight);
 
@@ -29,7 +28,7 @@ class Router{
 		bool ToggleOnOff();
 
 	protected:
-		friend bool operator==(const Router&, const Router&);
+		friend bool operator==(const Router&);
 
 	private:
 		int infinity = INT_MAX;
@@ -39,7 +38,8 @@ class Router{
 
 		int weightShiftArray[9] = {-3, -2, -1, 0, 0, 0, 1, 2, 3}
 
-		//"forwarding table" that tracks path to final router?
+		//do we implement a forwarding table?
+		// for simplicity, it could just track path to final router?
 
 		int bufferSize = 4096;
 		int bufferDelay = 100;
@@ -47,6 +47,7 @@ class Router{
 		int transmissionDelay = 2;
 
 		int failChance = 5;
+		//double failChance = 0.05
 
 		bool isRunning = true;
 };

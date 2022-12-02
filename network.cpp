@@ -1,7 +1,10 @@
 #include "network.h"
 
 Network::Network() {
-
+	//here is where we initiate the network.
+	//create routers
+	CreateRouteTable();	//populate router graph table
+	//	make initial forwarding tables for routers?
 }
 
 Network::~Network() {

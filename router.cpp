@@ -36,25 +36,6 @@ void Router::AddLink(Router* outRouter, int startWeight, bool loopCheck) {
 }
 
 /*
-getLinkWeight  get the link weight to update the graph array
-outRouter:		connected router
-
-return:			weight corresponding to that edge
-*//*
-int Router::GetLinkWeight(Router* outRouter) {
-	int weight = infinity;
-
-	for (int i = 0; i < numConnections; i++) {
-		if (connections[i].linkedRouter == outRouter) {
-			weight = connections.weight;
-			break;
-		}
-	}
-
-	return weight;
-}*/
-
-/*
 RandEdgeWeight:	randomly update the weight between the linked router
 outRouter:		the router we're updating the edge of
 
@@ -69,7 +50,9 @@ int Router::RandEdgeWeight(Router* outRouter) {
 
 	for (int i = 0; i < connections.size(); i++) {
 		// if our router is connected to this passed in router
-		if(connections[i].linkedRouter == outRouter) {
+		// side note: not sure if we need to dereference the pointers
+		//		but I think yes?
+		if(*connections[i].linkedRouter == *outRouter) {
 			int weightIndex;
 			/* in our weightShiftArray, indices 0-2 are negative, 
 				3-5 are zero, and 6-8 are positive.*/
@@ -128,7 +111,8 @@ bool Router::ToggleOnOff() {
 /*
 overloaded equality operator
 if the left and right routers have the same indices, they're the same router
+might be worth updating if we want to check more than just the indices
 */
-bool operator==(const Router& left, const Rotuer& right) {
-	return left.GetIndex() == right.GetIndex();
+bool operator==(const Router& right) {
+	return GetIndex() == right.GetIndex();
 }
