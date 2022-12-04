@@ -23,20 +23,21 @@ class Router{
 		void AddLink(Router* outRouter, int outWeight, bool loopCheck);
 		int RandEdgeWeight(Router* outRouter);
 		void UpdateEdgeWeight(Router* outRouter, int newWeight);
+		void FailChance();
 
-		int GetIndex();
+		int GetIndex() const;
 		bool ToggleOnOff();
 
 	protected:
-		friend bool operator==(const Router&);
+		friend bool operator==(const Router&, const Router&);
 
 	private:
 		int infinity = INT_MAX;
 		int index;
 		int numConnections = 0;
-		vector<RouterLink> connections;	//represents graph edges
+		vector<RouterLink*> connections;	//represents graph edges
 
-		int weightShiftArray[9] = {-3, -2, -1, 0, 0, 0, 1, 2, 3}
+		int weightShiftArray[9] = {-3, -2, -1, 0, 0, 0, 1, 2, 3};
 
 		//do we implement a forwarding table?
 		// for simplicity, it could just track path to final router?

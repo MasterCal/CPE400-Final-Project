@@ -23,9 +23,9 @@ startWeight:	weight of the edge between the two routers
 linkCheck:		bool for changing the linked router without infinite loop
 */
 void Router::AddLink(Router* outRouter, int startWeight, bool loopCheck) {
-	RouterLink newLink = new RouterLink;
-	newLink.linkedRouter = outRouter;
-	newLink.weight = startWeight;
+	RouterLink* newLink = new RouterLink;
+	newLink->linkedRouter = outRouter;
+	newLink->weight = startWeight;
 	connections.push_back(newLink);
 
 	numConnections = connections.size();
@@ -52,15 +52,15 @@ int Router::RandEdgeWeight(Router* outRouter) {
 		// if our router is connected to this passed in router
 		// side note: not sure if we need to dereference the pointers
 		//		but I think yes?
-		if(*connections[i].linkedRouter == *outRouter) {
+		if(*connections[i]->linkedRouter == *outRouter) {
 			int weightIndex;
 			/* in our weightShiftArray, indices 0-2 are negative, 
 				3-5 are zero, and 6-8 are positive.*/
-			if (connections[i].weight > infinity - 4)
+			if (connections[i]->weight > infinity - 4)
 				//if our edge weight is near infinity, we don't want to add to it
 				// so we only between the first six indices
 				weightIndex = rand() % 6;
-			else if (connections[i].weight < 4)
+			else if (connections[i]->weight < 4)
 				//if our edge weight is near zero, we don't want to subtract from it
 				// so we pick from the last six indices
 				weightIndex = rand() % 6 + 3;
@@ -69,11 +69,11 @@ int Router::RandEdgeWeight(Router* outRouter) {
 				weightIndex = rand() % 9;
 
 			//adjust the edge weight by the value in the array
-			connections[i].weight += weightShiftArray[weightIndex]
-			newWeight = connections[i].weight;
+			connections[i]->weight += weightShiftArray[weightIndex];
+			newWeight = connections[i]->weight;
 
 			//update the connection vector on the connected router
-			connections[i].linkedRouter->UpdateEdgeWeight(this, newWeight);
+			connections[i]->linkedRouter->UpdateEdgeWeight(this, newWeight);
 			break;
 		}
 	}
@@ -90,15 +90,33 @@ void Router::UpdateEdgeWeight(Router* outRouter, int newWeight) {
 
 	for (int i = 0; i < connections.size(); i++) {
 		//find the connected router
-		if (*connections[i].linkedRouter == *outRouter)
-			connections[i].weight = newWeight;
+		if (*connections[i]->linkedRouter == *outRouter)
+			connections[i]->weight = newWeight;
 			break;
+	}
+}
+
+/*
+FailChance: generate random number, compare against router fail chance
+	if random number < fail chance, Toggle the router
+*/
+void Router::FailChance() {
+	//generate a random number between 1-100
+	int failNum = rand() % 100 + 1;
+
+	if(failNum < failChance) {
+		ToggleOnOff();
+		cout << "router " << index << " toggled ";
+		if (isRunning)
+			cout << "on" << endl;
+		else
+			cout << "off" << endl;
 	}
 }
 
 //getIndex: returns the index of this router
 //this can be used when adding a link, or updating the 2d graph
-int Router::GetIndex() {
+int Router::GetIndex() const{
 	return index;
 }
 
@@ -113,6 +131,6 @@ overloaded equality operator
 if the left and right routers have the same indices, they're the same router
 might be worth updating if we want to check more than just the indices
 */
-bool operator==(const Router& right) {
-	return GetIndex() == right.GetIndex();
+bool operator==(const Router& left, const Router& right) {
+	return (left.GetIndex() == right.GetIndex());
 }
