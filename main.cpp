@@ -1,16 +1,17 @@
-#inclue "network.cpp"
+#include "network.cpp"
 
 int main() {
 	srand(time(NULL));	//seed the random generator
+	bool netRunning;
+	int result = 1;		//starting at non-zero to indicate potential non-standard exit
 
+	cout << "Making new network" << endl;
 	Network newNet;
+	cout << "network made" << endl;
 
-	newNet.CreateRouteTables();
+	if(newNet.GetStatus()) {
+		result = newNet.Simulation();
+	}
 
-	//int result = newNet.simulate();
-
-	// if result != 0, we have an error of some kind
-
-	//return result;
-	return 0;
+	return result;
 }

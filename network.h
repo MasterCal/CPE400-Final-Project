@@ -4,6 +4,8 @@
 #include <vector>
 #include <iostream>
 #include <climits>
+#include <fstream>
+#include <string>
 #include "router.cpp"
 using namespace std;
 
@@ -19,14 +21,22 @@ class Network {
 		~Network();
 
 		//void InitNetwork();	// class constructor will do this
-		void CreateRouteTable();
+		bool CreateRouteTable();
+		void CreateRouters();
 		void UpdateGraph();
+		void PrintGraph(int);
 
-		//int Simulation();
+		bool GetStatus();
+
+		int Simulation();
 	private:
-		int graphSize = 8
+		int graphSize;
 		int infinity = INT_MAX;
-		vector<Routers*> routerNetwork;		// to track/modify the routers
-		int weightGraph[graphSize][graphSize];	//2D graph weight table
+
+		bool status;
+
+		vector<Router*> routerNetwork;		// to track/modify the routers
+		vector<vector<int>> weightGraph;
+		//int weightGraph[graphSize][graphSize];	//2D graph weight table
 };
 #endif
