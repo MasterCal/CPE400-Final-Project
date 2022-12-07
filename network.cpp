@@ -6,7 +6,7 @@ CreateRouteTable: takes info from networkTable.txt to fill edge weight graph
 CreateRouters: uses edge weight graph to create routers and track links
 */
 Network::Network() {
-	status = CreateRouteTable();	//populate router graph table
+	CreateRouteTable();	//populate router graph table
 	if(status) {
 		CreateRouters();
 		//	make initial forwarding tables for routers?
@@ -28,10 +28,9 @@ return bool:
 -true if file exists and all text data is correct
 -false if file doesn't exist, or isn't in proper format
 */
-bool Network::CreateRouteTable() {
-	bool success = true;
-	string filename = "networkTable.txt";
-	string line, token;
+void Network::CreateRouteTable() {
+	status = true;
+	string line, token, filename = "networkTable.txt";
 	char delim = '\t';
 	ifstream fin;
 	int numToken, start = 0, end = 0;
@@ -41,7 +40,7 @@ bool Network::CreateRouteTable() {
 	// check if file opened correctly
 	if(!fin.is_open()) {
 		cout << "Failed to open file " << filename << endl;
-		success = false;
+		status = false;
 	}
 	else {
 		//first line of the text file is the graph size
@@ -52,7 +51,6 @@ bool Network::CreateRouteTable() {
 		while(getline(fin, line)) {
 			vector<int> newRow;
 			start = 0;
-			end = line.find(delim);
 
 			//this loop grabs each number in the row
 			// converts it to an int, and pushes it onto newRow
@@ -72,7 +70,7 @@ bool Network::CreateRouteTable() {
 			//if there are too many elements in one row, there's going to be a problem with our graph
 			if(newRow.size() != graphSize + 1) {
 				cout << "row " << weightGraph.size() + 1 << " has the wrong number of elements" << endl;
-				success = false;
+				status = false;
 			}
 
 			//push the completed row onto WeightGraph
@@ -81,13 +79,11 @@ bool Network::CreateRouteTable() {
 
 		if(weightGraph.size() != graphSize) {
 			cout << "Given graph size doesn't match the number of rows" << endl;
-			success = false;
+			status = false;
 		}
 	}
 
 	fin.close();
-
-	return success;
 }
 
 /*
@@ -101,7 +97,7 @@ void Network::CreateRouters() {
 	// Make [graphSize] routers, push them onto routerNetwork
 	for (int i = 0; i < graphSize; i++) {
 		// element 8 of a row in the weight graph is the fail chance
-		Router* newRouter = new Router(i, weightGraph[i][8]);
+		Router* newRouter = new Router(i, weightGraph[i][graphSize]);
 		routerNetwork.push_back(newRouter);
 	}
 
