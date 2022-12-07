@@ -12,6 +12,8 @@ class Router;	//forward declaration
 struct RouterLink {
 	Router* linkedRouter;
 	int weight;
+	bool isRunning = true;
+	int failChance = 1;
 };
 
 class Router{
@@ -22,7 +24,7 @@ class Router{
 
 		void AddLink(Router* outRouter, int outWeight, bool loopCheck);
 		int RandEdgeWeight(Router* outRouter);
-		void UpdateEdgeWeight(Router* outRouter, int newWeight);
+		void UpdateEdgeWeight(Router* outRouter, int newWeight, bool failState);
 		void FailChance();
 
 		int GetIndex() const;

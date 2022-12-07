@@ -22,16 +22,16 @@ outRouter:		The router we're connecting to
 startWeight:	weight of the edge between the two routers
 linkCheck:		bool for changing the linked router without infinite loop
 */
-void Router::AddLink(Router* outRouter, int startWeight, bool loopCheck) {
+void Router::AddLink(Router* outRouter, int linkWeight, bool loopCheck) {
 	RouterLink* newLink = new RouterLink;
 	newLink->linkedRouter = outRouter;
-	newLink->weight = startWeight;
+	newLink->weight = linkWeight;
 	connections.push_back(newLink);
 
 	numConnections = connections.size();
 
 	if(loopCheck){
-		outRouter->AddLink(this, startWeight, false);
+		outRouter->AddLink(this, linkWeight, false);
 	}
 }
 
@@ -41,17 +41,17 @@ outRouter:		the router we're updating the edge of
 
 	uses an array to simulate a weighted randomization
 	modifies the existing edge weight
+	Also generates a random number to see if the link fails
 
 return:			new weight corresponding to that router link
 */
 int Router::RandEdgeWeight(Router* outRouter) {
 	// start by setting the new weight to infinity
 	int newWeight = infinity;
+	int linkFailNum = rand() % 100 + 1;
 
 	for (int i = 0; i < connections.size(); i++) {
 		// if our router is connected to this passed in router
-		// side note: not sure if we need to dereference the pointers
-		//		but I think yes?
 		if(*connections[i]->linkedRouter == *outRouter) {
 			int weightIndex;
 			/* in our weightShiftArray, indices 0-2 are negative, 
@@ -68,12 +68,24 @@ int Router::RandEdgeWeight(Router* outRouter) {
 				//otherwise, we pick from the whole array
 				weightIndex = rand() % 9;
 
+			// check to see if the link fails/turns on
+			if (linkFailNum < connections[i]->failChance) {
+				cout << "link between " << index << " and " << connections[i]->linkedRouter->index << " toggled" << endl;
+				connections[i]->isRunning = !connections[i]->isRunning;
+			}
+
 			//adjust the edge weight by the value in the array
 			connections[i]->weight += weightShiftArray[weightIndex];
 			newWeight = connections[i]->weight;
 
 			//update the connection vector on the connected router
-			connections[i]->linkedRouter->UpdateEdgeWeight(this, newWeight);
+			connections[i]->linkedRouter->UpdateEdgeWeight(this, newWeight, connections[i]->isRunning);
+
+			// if the link fails, we want the edge weight graph to read infinity
+			// but we still track the actual link weight on the connection side.
+			if (!connections[i]->isRunning)
+				newWeight = infinity;
+			
 			break;
 		}
 	}
@@ -85,14 +97,18 @@ int Router::RandEdgeWeight(Router* outRouter) {
 UpdateEdgeWeight: updates the edge weight between two routers
 This is a companion to RandEdgeWeight. We can't update router j's info directly from router
 i's RandEdgeWeight, so after getting that number, we put it into router j's connection weight
+
+We also pass in the other link's failState, so packets don't use it.
 */
-void Router::UpdateEdgeWeight(Router* outRouter, int newWeight) {
+void Router::UpdateEdgeWeight(Router* outRouter, int newWeight, bool failState) {
 
 	for (int i = 0; i < connections.size(); i++) {
 		//find the connected router
-		if (*connections[i]->linkedRouter == *outRouter)
+		if (*connections[i]->linkedRouter == *outRouter) {
+			connections[i]->isRunning = failState;
 			connections[i]->weight = newWeight;
 			break;
+		}
 	}
 }
 

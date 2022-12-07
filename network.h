@@ -21,7 +21,7 @@ class Network {
 		~Network();
 
 		//void InitNetwork();	// class constructor will do this
-		bool CreateRouteTable();
+		void CreateRouteTable();
 		void CreateRouters();
 		void UpdateGraph();
 		void PrintGraph(int);
