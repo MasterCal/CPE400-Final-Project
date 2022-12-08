@@ -44,6 +44,7 @@ class Router{
 		//do we implement a forwarding table?
 		// for simplicity, it could just track path to final router?
 
+		vector<Packet*> buffer;
 		int bufferSize = 4096;
 		int bufferDelay = 100;
 		int propagationDelay = 1;
