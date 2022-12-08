@@ -176,3 +176,22 @@ int Network::Simulation() {
 
 	return status;
 }
+
+// -- MINIMUM DISTANCE UTILITY FUNCTION --
+// used to find router with minimum distance value from the set not yet included
+// in the shortest path tree
+int Network::MinimumDistance(int dist[], bool sptSet[]){
+
+}
+
+// -- DIJSKTRA FUNCTION --
+// implementation of single source shortest path algorithm
+void Network::Dijkstra(int graph[8][8], int sourceRouter){
+
+}
+
+// -- PRINT DISTANCES UTILITY FUNCTION --
+// Prints routers in order from 0 - n along with their distance from source router
+void Network::PrintDistances(int dist[]){
+
+}

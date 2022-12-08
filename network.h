@@ -7,6 +7,7 @@
 #include <fstream>
 #include <string>
 #include "router.cpp"
+#include <limits.h>
 using namespace std;
 
 struct Packet {
@@ -29,8 +30,13 @@ class Network {
 		bool GetStatus();
 
 		int Simulation();
+
+		int MinimumDistance(int dist[], bool sptSet[]);
+		void Dijkstra(int graph[8][8], int sourceRouter);
+		void PrintDistances(int dist[]);
+
 	private:
-		int graphSize;
+		int graphSize = 0;
 		int infinity = INT_MAX;
 
 		bool status;

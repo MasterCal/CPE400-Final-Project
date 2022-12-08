@@ -10,7 +10,7 @@ This project uses 'networkTable.txt' to generate the router network, the txt fil
   
   >next rows: an array of size [n+1, n]. the [n x n] component comprises of the edge weights
   
-  >last row in each column comprises of the failure chances for each router (represented as an integer from 0-100, with 0 indicating a router that cannot fail, and 100 indicating a router that always fails)
+  >last column in each row comprises of the failure chances for each router (represented as an integer from 0-100, with 0 indicating a router that cannot fail, and 100 indicating a router that always fails)
 
 # Implementation
 The project is coded in C++, using a weighted graph to represent the router network. Our routing algorithm uses global information
