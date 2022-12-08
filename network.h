@@ -6,13 +6,25 @@
 #include <climits>
 #include <fstream>
 #include <string>
+#include <cstdlib>
 #include "router.cpp"
 using namespace std;
 
 struct Packet {
 	int size;
-	bool fragmentable;
 	bool requiresACK;
+	Router* srcRouter;
+	Router* destRouter;
+
+	Packet(){}
+
+	Packet(int _size, bool _requiresACK, Router* _srcRouter, Router* _destRouter)
+	{
+		size = _size;
+		requiresACK = _requiresACK;
+		srcRouter = _srcRouter; 
+		destRouter = _destRouter;
+	}
 };
 
 class Network {
@@ -29,6 +41,10 @@ class Network {
 		bool GetStatus();
 
 		int Simulation();
+
+		Packet* CreatePacket(int);
+		void ForwardPacket();
+
 	private:
 		int graphSize;
 		int infinity = INT_MAX;
