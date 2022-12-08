@@ -34,7 +34,7 @@ class Network {
 		int Simulation();
 
 		int MinimumDistance(int dist[], bool sptSet[]);
-		void Dijsktra(int graph[numberOfRouters][numberOfRouters], int sourceRouter);
+		void Dijsktra(vector<vector<int>> &wGraph, int sourceRouter);
 		void PrintDistances(int dist[]);
 
 	private:
@@ -45,6 +45,6 @@ class Network {
 
 		vector<Router*> routerNetwork;		// to track/modify the routers
 		vector<vector<int>> weightGraph;
-		//int weightGraph[graphSize][graphSize];	//2D graph weight table
+		// int weightGraph[numberOfRouters][numberOfRouters];	//2D graph weight table
 };
 #endif

@@ -170,7 +170,7 @@ int Network::Simulation() {
 			running = false;
 
 		UpdateGraph();	//update edge weights, check fail chance
-		// DIJSKTRA CALL HERE
+		Dijsktra(weightGraph, 0);// DIJSKTRA CALL HERE
 		PrintGraph(ticks);	//dummy/test function
 		ticks++;
 	}
@@ -192,13 +192,13 @@ int Network::MinimumDistance(int dist[], bool sptSet[]){
 		}
 	}
 
-	cout << "Value of Minimum Index in MinimumDistance Function: " << min_index;	// debugging help line
+	//cout << "Value of Minimum Index in MinimumDistance Function: " << min_index;	// debugging help line
 	return min_index;
 }
 
 // -- DIJSKTRA FUNCTION --
 // implementation of single source shortest path algorithm
-void Network::Dijsktra(int graph[numberOfRouters][numberOfRouters], int sourceRouter){
+void Network::Dijsktra(vector<vector<int>> &wGraph, int sourceRouter){
 	
 	int distance[numberOfRouters]; // holds the shortest distance from shortest router to i
 	bool sptSet[numberOfRouters]; // Shortest Path Tree Set sptSet[i] set to true if router is included in shortest path
@@ -221,10 +221,10 @@ void Network::Dijsktra(int graph[numberOfRouters][numberOfRouters], int sourceRo
 		for(int i = 0; i < numberOfRouters; i++){
 			// Update distance[i] only if not in sptSet & there is an edge between sourceRouter and i
 			// and the total weight of path from sourceRouter to i is smaller than the current value of distance[i]
-			if(!sptSet[i] && graph[min][i]
+			if(!sptSet[i] && wGraph[min][i]
 				&& distance[min] != infinity
-				&& distance[min] + graph[min][i] < distance[i])
-				distance[i] = distance[min] + graph[min][i];
+				&& distance[min] + wGraph[min][i] < distance[i])
+				distance[i] = distance[min] + wGraph[min][i];
 		}
 	}
 
@@ -239,3 +239,6 @@ void Network::PrintDistances(int dist[]){
 		cout << i << " \t\t\t\t" << dist[i] << endl;
 	}
 }
+
+// --  --
+// 
