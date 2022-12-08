@@ -10,6 +10,8 @@
 #include <limits.h>
 using namespace std;
 
+#define numberOfRouters 8
+
 struct Packet {
 	int size;
 	bool fragmentable;
@@ -32,7 +34,7 @@ class Network {
 		int Simulation();
 
 		int MinimumDistance(int dist[], bool sptSet[]);
-		void Dijkstra(int graph[8][8], int sourceRouter);
+		void Dijsktra(int graph[numberOfRouters][numberOfRouters], int sourceRouter);
 		void PrintDistances(int dist[]);
 
 	private:

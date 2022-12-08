@@ -170,6 +170,7 @@ int Network::Simulation() {
 			running = false;
 
 		UpdateGraph();	//update edge weights, check fail chance
+		// DIJSKTRA CALL HERE
 		PrintGraph(ticks);	//dummy/test function
 		ticks++;
 	}
@@ -182,16 +183,59 @@ int Network::Simulation() {
 // in the shortest path tree
 int Network::MinimumDistance(int dist[], bool sptSet[]){
 
+	int minimum = infinity, min_index;
+
+	for(int i = 0; i < numberOfRouters; i++){
+		if(sptSet[i] == false && dist[i] <= minimum){
+			minimum = dist[i];
+			min_index = i;
+		}
+	}
+
+	cout << "Value of Minimum Index in MinimumDistance Function: " << min_index;	// debugging help line
+	return min_index;
 }
 
 // -- DIJSKTRA FUNCTION --
 // implementation of single source shortest path algorithm
-void Network::Dijkstra(int graph[8][8], int sourceRouter){
+void Network::Dijsktra(int graph[numberOfRouters][numberOfRouters], int sourceRouter){
+	
+	int distance[numberOfRouters]; // holds the shortest distance from shortest router to i
+	bool sptSet[numberOfRouters]; // Shortest Path Tree Set sptSet[i] set to true if router is included in shortest path
 
+	// 1st step of Dijkstra
+	// initialize all distances as infinite and sptSet[] as false
+	for(int i = 0; i < numberOfRouters; i++){
+		distance[i] = infinity;
+		sptSet[i] = false;
+	}
+
+	distance[sourceRouter] = 0; // distance from source to itself is 0 
+
+	for(int i = 0; i < numberOfRouters - 1; i++){
+		int min = MinimumDistance(distance, sptSet);
+
+		sptSet[min] = true;	//marking the shortest path router chosen from MinimumDistance
+
+		// Update distance value of adjacent routers of the router that was picked
+		for(int i = 0; i < numberOfRouters; i++){
+			// Update distance[i] only if not in sptSet & there is an edge between sourceRouter and i
+			// and the total weight of path from sourceRouter to i is smaller than the current value of distance[i]
+			if(!sptSet[i] && graph[min][i]
+				&& distance[min] != infinity
+				&& distance[min] + graph[min][i] < distance[i])
+				distance[i] = distance[min] + graph[min][i];
+		}
+	}
+
+	PrintDistances(distance);
 }
 
 // -- PRINT DISTANCES UTILITY FUNCTION --
 // Prints routers in order from 0 - n along with their distance from source router
 void Network::PrintDistances(int dist[]){
-
+	cout << "Router \t Distance from Source" << endl;
+	for(int i = 0; i < numberOfRouters; i++){
+		cout << i << " \t\t\t\t" << dist[i] << endl;
+	}
 }
