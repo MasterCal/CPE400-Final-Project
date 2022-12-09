@@ -25,10 +25,10 @@ class Router{
 		void AddLink(Router* outRouter, int outWeight, bool loopCheck);
 		int RandEdgeWeight(Router* outRouter);
 		void UpdateEdgeWeight(Router* outRouter, int newWeight, bool failState);
-		void FailChance();
+		bool FailChance();
 
 		int GetIndex() const;
-		bool ToggleOnOff();
+		bool GetRunning() const;
 
 	protected:
 		friend bool operator==(const Router&, const Router&);
@@ -44,7 +44,7 @@ class Router{
 		//do we implement a forwarding table?
 		// for simplicity, it could just track path to final router?
 
-		vector<Packet*> buffer;
+		//vector<Packet*> buffer;
 		int bufferSize = 4096;
 		int bufferDelay = 100;
 		int propagationDelay = 1;

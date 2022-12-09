@@ -47,19 +47,14 @@ class Network {
 
 		int Simulation();
 
-
-
 		int MinimumDistance(int dist[], bool sptSet[]);
-		void Dijsktra(int sourceRouter);
+		int Dijsktra(int sourceRouter);
 		void PrintSolutions(int source, vector<int> dist, vector<int> parents);
 		void PrintPath(int router, vector<int> parents);
+		int FindPath(int router, vector<int> parents);
 		//void PrintDistances(vector<int> &dist);
-
-		void Dijsktra(vector<vector<int> > weightGraph, int sourceRouter);
-		void PrintSolutions(int source, vector<int> dist, vector<int> parents);
-		void PrintPath(int router, vector<int> parents);
 		
-		vector<vector<int>> DeleteLastColumn(vector<vector<int>> original);
+		//vector<vector<int>> DeleteLastColumn(vector<vector<int>> original);
 
 
 		Packet* CreatePacket(int);
@@ -74,6 +69,7 @@ class Network {
 
 		vector<Router*> routerNetwork;		// to track/modify the routers
 		vector<vector<int>> weightGraph;
+		vector<int> forwardTable;
 		// int weightGraph[numberOfRouters][numberOfRouters];	//2D graph weight table
 };
 #endif
