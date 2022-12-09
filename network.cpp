@@ -59,8 +59,8 @@ void Network::CreateRouteTable() {
 				if (end == string::npos) end = line.length();
 				token = line.substr(start, end - start);
 				numToken = stoi(token);
-				if (numToken == 0 && newRow.size() < graphSize)
-					numToken = infinity;
+				//if (numToken == 0 && newRow.size() < graphSize)
+				//	numToken = infinity;
 
 				start = end + 1;
 				newRow.push_back(numToken);
@@ -170,11 +170,140 @@ int Network::Simulation() {
 			running = false;
 
 		UpdateGraph();	//update edge weights, check fail chance
+		vector<vector<int>> copy = DeleteLastColumn(weightGraph);
+		Dijsktra(copy, 0);// DIJSKTRA CALL HERE
 		PrintGraph(ticks);	//dummy/test function
 		ticks++;
 	}
 
 	return status;
+}
+
+
+// -- DIJSKTRA FUNCTION --
+// implementation of single source shortest path algorithm
+void Network::Dijsktra(vector<vector<int> > weightGraph, int sourceRouter){
+	int nVertices = weightGraph[0].size();
+
+	// shortestDistances[i] will hold the
+	// shortest distance from src to i
+	vector<int> shortestDistances(nVertices);
+
+	// added[i] will true if vertex i is
+	// included / in shortest path tree
+	// or shortest distance from src to
+	// i is finalized
+	vector<bool> added(nVertices);
+
+	// Initialize all distances as
+	// INFINITE and added[] as false
+	for (int vertexIndex = 0; vertexIndex < nVertices;
+		vertexIndex++) {
+		shortestDistances[vertexIndex] = INT_MAX;
+		added[vertexIndex] = false;
+	}
+
+	// Distance of source vertex from
+	// itself is always 0
+	shortestDistances[sourceRouter] = 0;
+
+	// Parent array to store shortest
+	// path tree
+	vector<int> parents(nVertices);
+
+	// The starting vertex does not
+	// have a parent
+	parents[sourceRouter] = NO_PARENT;
+
+	// Find shortest path for all
+	// vertices
+	for (int i = 1; i < nVertices; i++) {
+
+		// Pick the minimum distance vertex
+		// from the set of vertices not yet
+		// processed. nearestVertex is
+		// always equal to startNode in
+		// first iteration.
+		int nearestVertex = -1;
+		int shortestDistance = INT_MAX;
+		for (int vertexIndex = 0; vertexIndex < nVertices;
+			vertexIndex++) {
+			if (!added[vertexIndex]
+				&& shortestDistances[vertexIndex]
+					< shortestDistance) {
+				nearestVertex = vertexIndex;
+				shortestDistance
+					= shortestDistances[vertexIndex];
+			}
+		}
+
+		// Mark the picked vertex as
+		// processed
+		added[nearestVertex] = true;
+
+		// Update dist value of the
+		// adjacent vertices of the
+		// picked vertex.
+		for (int vertexIndex = 0; vertexIndex < nVertices;
+			vertexIndex++) {
+			int edgeDistance
+				= weightGraph[nearestVertex]
+								[vertexIndex];
+
+			if (edgeDistance > 0
+				&& ((shortestDistance + edgeDistance)
+					< shortestDistances[vertexIndex])) {
+				parents[vertexIndex] = nearestVertex;
+				shortestDistances[vertexIndex]
+					= shortestDistance + edgeDistance;
+			}
+		}
+	}
+
+	PrintSolutions(sourceRouter, shortestDistances, parents);
+}
+
+
+// --  --
+// 
+void Network::PrintSolutions(int source, vector<int> dist, vector<int> parents){
+	int nVertices = dist.size();
+	cout << "Vertex\t Distance\tPath";
+
+	for (int vertexIndex = 0; vertexIndex < nVertices;
+		vertexIndex++) {
+		if (vertexIndex != source) {
+			cout << "\n" << source << " -> ";
+			cout << vertexIndex << " \t\t ";
+			cout << dist[vertexIndex] << "\t\t";
+			PrintPath(vertexIndex, parents);
+		}
+	}
+}
+
+void Network::PrintPath(int router, vector<int> parents){
+	// Base case : Source node has
+	// been processed
+	if (router == NO_PARENT) {
+		return;
+	}
+	PrintPath(parents[router], parents);
+	cout << router << " ";
+}
+
+vector<vector<int>> Network::DeleteLastColumn(vector<vector<int>> original){
+	vector<vector<int>> result;
+    int row_size = original.size();
+    int col_size = original[0].size();
+    
+    for (int i = 0; i < row_size; i++) {
+        vector<int> row;
+        for (int j = 0; j < col_size - 1; j++) {
+            row.push_back(original[i][j]);
+        }
+        result.push_back(row);
+    }
+    return result;
 }
 
 //This function creates packet objects that will be stored in the router buffers. For simplicity, all the packets will have a source
@@ -193,3 +322,4 @@ Packet* Network::CreatePacket(int bufferSize){
 void ForwardPacket(){
 	
 }
+

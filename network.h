@@ -8,7 +8,12 @@
 #include <string>
 #include <cstdlib>
 #include "router.cpp"
+#include <limits.h>
+
+
 using namespace std;
+
+int NO_PARENT = -1;
 
 struct Packet {
 	int size;
@@ -42,17 +47,25 @@ class Network {
 
 		int Simulation();
 
+
+		void Dijsktra(vector<vector<int> > weightGraph, int sourceRouter);
+		void PrintSolutions(int source, vector<int> dist, vector<int> parents);
+		void PrintPath(int router, vector<int> parents);
+		
+		vector<vector<int>> DeleteLastColumn(vector<vector<int>> original);
+
 		Packet* CreatePacket(int);
 		void ForwardPacket();
 
+
 	private:
-		int graphSize;
+		int graphSize = 0;
 		int infinity = INT_MAX;
 
 		bool status;
 
 		vector<Router*> routerNetwork;		// to track/modify the routers
 		vector<vector<int>> weightGraph;
-		//int weightGraph[graphSize][graphSize];	//2D graph weight table
+		// int weightGraph[numberOfRouters][numberOfRouters];	//2D graph weight table
 };
 #endif
