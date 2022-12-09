@@ -47,7 +47,7 @@ return:			new weight corresponding to that router link
 */
 int Router::RandEdgeWeight(Router* outRouter) {
 	// start by setting the new weight to infinity
-	int newWeight = infinity;
+	int newWeight = 0;
 	int linkFailNum = rand() % 100 + 1;
 
 	for (int i = 0; i < connections.size(); i++) {
@@ -84,7 +84,7 @@ int Router::RandEdgeWeight(Router* outRouter) {
 			// if the link fails, we want the edge weight graph to read infinity
 			// but we still track the actual link weight on the connection side.
 			if (!connections[i]->isRunning)
-				newWeight = infinity;
+				newWeight = 0;
 			
 			break;
 		}

@@ -103,7 +103,7 @@ void Network::CreateRouters() {
 
 	for(int i = 0; i < graphSize; i++) {
 		for (int j = i+1; j < graphSize; j++) {
-			if (weightGraph[i][j] != infinity) {
+			if (weightGraph[i][j] != 0) {
 				routerNetwork[i]->AddLink(routerNetwork[j], weightGraph[i][j], true);
 			}
 		}
