@@ -9,12 +9,11 @@
 #include <cstdlib>
 #include "router.cpp"
 #include <limits.h>
-#include <algorithm>
-#include <iterator>
+
 
 using namespace std;
 
-#define numberOfRouters 8
+int NO_PARENT = -1;
 
 struct Packet {
 	int size;
@@ -49,11 +48,20 @@ class Network {
 		int Simulation();
 
 
+
 		int MinimumDistance(int dist[], bool sptSet[]);
 		void Dijsktra(int sourceRouter);
 		void PrintSolutions(int source, vector<int> dist, vector<int> parents);
 		void PrintPath(int router, vector<int> parents);
 		//void PrintDistances(vector<int> &dist);
+
+		void Dijsktra(vector<vector<int> > weightGraph, int sourceRouter);
+		void PrintSolutions(int source, vector<int> dist, vector<int> parents);
+		void PrintPath(int router, vector<int> parents);
+		
+		vector<vector<int>> DeleteLastColumn(vector<vector<int>> original);
+
+
 		Packet* CreatePacket(int);
 		void ForwardPacket();
 

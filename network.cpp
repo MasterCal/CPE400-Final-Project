@@ -59,8 +59,8 @@ void Network::CreateRouteTable() {
 				if (end == string::npos) end = line.length();
 				token = line.substr(start, end - start);
 				numToken = stoi(token);
-				if (numToken == 0 && newRow.size() < graphSize)
-					numToken = infinity;
+				//if (numToken == 0 && newRow.size() < graphSize)
+				//	numToken = infinity;
 
 				start = end + 1;
 				newRow.push_back(numToken);
@@ -170,7 +170,8 @@ int Network::Simulation() {
 			running = false;
 
 		UpdateGraph();	//update edge weights, check fail chance
-		Dijsktra(0);// DIJSKTRA CALL HERE
+		vector<vector<int>> copy = DeleteLastColumn(weightGraph);
+		Dijsktra(copy, 0);// DIJSKTRA CALL HERE
 		PrintGraph(ticks);	//dummy/test function
 		ticks++;
 	}
@@ -178,6 +179,7 @@ int Network::Simulation() {
 	return status;
 }
 
+<<<<<<< HEAD
 // -- MINIMUM DISTANCE UTILITY FUNCTION --
 // used to find router with minimum distance value from the set not yet included
 // in the shortest path tree
@@ -195,102 +197,136 @@ int Network::MinimumDistance(int dist[], bool sptSet[]){
 	//cout << "Value of Minimum Index in MinimumDistance Function: " << min_index;	// debugging help line
 	return min_index;
 }
+=======
+>>>>>>> main
 
 // -- DIJSKTRA FUNCTION --
 // implementation of single source shortest path algorithm
-void Network::Dijsktra(int sourceRouter){
-	
-	int nRouters = graphSize;				// finds size of wGraph to hold 
-		
-	vector<int> shortestDistances(nRouters);		// holds distance from sourceRouter to i
+void Network::Dijsktra(vector<vector<int> > weightGraph, int sourceRouter){
+	int nVertices = weightGraph[0].size();
 
-	vector<bool> routersChosen(nRouters);			// routersChosen[i] = true if included in the shortest path tree
+	// shortestDistances[i] will hold the
+	// shortest distance from src to i
+	vector<int> shortestDistances(nVertices);
 
-	// 1st step of Dijkstra
-	// initialize all distances as infinite and routersChosen[] as false
-	for(int i = 0; i < nRouters; i++){
-		shortestDistances[i] = infinity;
-		routersChosen[i] = false;
+	// added[i] will true if vertex i is
+	// included / in shortest path tree
+	// or shortest distance from src to
+	// i is finalized
+	vector<bool> added(nVertices);
+
+	// Initialize all distances as
+	// INFINITE and added[] as false
+	for (int vertexIndex = 0; vertexIndex < nVertices;
+		vertexIndex++) {
+		shortestDistances[vertexIndex] = INT_MAX;
+		added[vertexIndex] = false;
 	}
-	
-	shortestDistances[sourceRouter] = 0; 	// distance from source to itself is 0 
-	vector<int> parentRouters(nRouters);	// array to store shortest path tree
 
-	parentRouters[sourceRouter] = -1; 		// source has NO PARENT given -1 as placeholder
+	// Distance of source vertex from
+	// itself is always 0
+	shortestDistances[sourceRouter] = 0;
 
-	// Beginning of finding shortest path for all routers
-	for(int i = 1; i < nRouters; i++){
-		int nearestRouter = -1;				// nearest router is always equal to source router in first iteration
-		int shortDistance = infinity;		
+	// Parent array to store shortest
+	// path tree
+	vector<int> parents(nVertices);
 
-		for(int j = 0; j < nRouters; j++){	
-			if(!routersChosen[j]			
-				&& shortestDistances[j]
-					< shortDistance){
-				nearestRouter = j;
-				shortDistance = shortestDistances[j];
+	// The starting vertex does not
+	// have a parent
+	parents[sourceRouter] = NO_PARENT;
+
+	// Find shortest path for all
+	// vertices
+	for (int i = 1; i < nVertices; i++) {
+
+		// Pick the minimum distance vertex
+		// from the set of vertices not yet
+		// processed. nearestVertex is
+		// always equal to startNode in
+		// first iteration.
+		int nearestVertex = -1;
+		int shortestDistance = INT_MAX;
+		for (int vertexIndex = 0; vertexIndex < nVertices;
+			vertexIndex++) {
+			if (!added[vertexIndex]
+				&& shortestDistances[vertexIndex]
+					< shortestDistance) {
+				nearestVertex = vertexIndex;
+				shortestDistance
+					= shortestDistances[vertexIndex];
 			}
 		}
 
-		routersChosen[nearestRouter] = true;	//mark the closest router as true
+		// Mark the picked vertex as
+		// processed
+		added[nearestVertex] = true;
 
-		// Updating the distance values of the closest routers from the vertex
-		for(int index = 0; index < nRouters; index++){
-			int edgeDistance = weightGraph[nearestRouter][index];
-			if(edgeDistance > 0
-				&& ((shortDistance + edgeDistance)
-					< shortestDistances[index])){
-				parentRouters[index] = nearestRouter;
-				shortestDistances[index] = shortDistance + edgeDistance;
+		// Update dist value of the
+		// adjacent vertices of the
+		// picked vertex.
+		for (int vertexIndex = 0; vertexIndex < nVertices;
+			vertexIndex++) {
+			int edgeDistance
+				= weightGraph[nearestVertex]
+								[vertexIndex];
+
+			if (edgeDistance > 0
+				&& ((shortestDistance + edgeDistance)
+					< shortestDistances[vertexIndex])) {
+				parents[vertexIndex] = nearestVertex;
+				shortestDistances[vertexIndex]
+					= shortestDistance + edgeDistance;
 			}
 		}
+	}
 
-	}
-	for(int i =0; i < routersChosen.size(); i++){
-		cout << routersChosen.at(i);
-	}
-	//PrintDistances(shortestDistances);
-	//PrintSolutions(sourceRouter, shortestDistances, parentRouters);
+	PrintSolutions(sourceRouter, shortestDistances, parents);
 }
-
-// -- PRINT DISTANCES UTILITY FUNCTION --
-// Prints routers in order from 0 - n along with their distance from source router
-/* void Network::PrintDistances(vector<int> &dist){
-	cout << "\nRouter \t\t Distance from Source" << endl;
-	for(int i = 0; i < graphSize; i++){
-		cout << i << " \t\t\t" << dist.at(i) << endl;
-	}
-}
-*/
 
 
 // --  --
 // 
 void Network::PrintSolutions(int source, vector<int> dist, vector<int> parents){
-	int nRouters = graphSize;
+	int nVertices = dist.size();
+	cout << "Vertex\t Distance\tPath";
 
-	cout << "Router\t Path";
-
-	for(int i = 0; i < nRouters; i++){
-		if(i != source){
-			cout<< "\n" << source << " -> ";
-			cout<< i << " \t\t ";
-			//cout<< dist[i] << " \t\t ";
-			PrintPath(i, parents);
+	for (int vertexIndex = 0; vertexIndex < nVertices;
+		vertexIndex++) {
+		if (vertexIndex != source) {
+			cout << "\n" << source << " -> ";
+			cout << vertexIndex << " \t\t ";
+			cout << dist[vertexIndex] << "\t\t";
+			PrintPath(vertexIndex, parents);
 		}
 	}
 }
 
 void Network::PrintPath(int router, vector<int> parents){
-	if(router == -1){
+	// Base case : Source node has
+	// been processed
+	if (router == NO_PARENT) {
 		return;
 	}
-
 	PrintPath(parents[router], parents);
 	cout << router << " ";
 }
 
+vector<vector<int>> Network::DeleteLastColumn(vector<vector<int>> original){
+	vector<vector<int>> result;
+    int row_size = original.size();
+    int col_size = original[0].size();
+    
+    for (int i = 0; i < row_size; i++) {
+        vector<int> row;
+        for (int j = 0; j < col_size - 1; j++) {
+            row.push_back(original[i][j]);
+        }
+        result.push_back(row);
+    }
+    return result;
+}
 
+<<<<<<< HEAD
 /* this is code used to delete last column
 	int columnToDelete = 7;
 	for_each(wGraph.begin(), wGraph.end(),
@@ -299,6 +335,8 @@ void Network::PrintPath(int router, vector<int> parents){
 	});
 */
 =======
+=======
+>>>>>>> main
 //This function creates packet objects that will be stored in the router buffers. For simplicity, all the packets will have a source
 //address of Router 0 and a destination address of Router 7
 Packet* Network::CreatePacket(int bufferSize){
@@ -314,4 +352,9 @@ Packet* Network::CreatePacket(int bufferSize){
 //This function forwards each packet in the each router's buffer
 void ForwardPacket(){
 	
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> main
