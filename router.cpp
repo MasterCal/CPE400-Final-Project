@@ -116,18 +116,21 @@ void Router::UpdateEdgeWeight(Router* outRouter, int newWeight, bool failState) 
 FailChance: generate random number, compare against router fail chance
 	if random number < fail chance, Toggle the router
 */
-void Router::FailChance() {
+bool Router::FailChance() {
 	//generate a random number between 1-100
 	int failNum = rand() % 100 + 1;
 
 	if(failNum < failChance) {
-		ToggleOnOff();
+		isRunning = !isRunning;
+		//this print is just for testing
 		cout << "router " << index << " toggled ";
 		if (isRunning)
 			cout << "on" << endl;
 		else
 			cout << "off" << endl;
 	}
+
+	return isRunning;
 }
 
 //getIndex: returns the index of this router
@@ -136,9 +139,7 @@ int Router::GetIndex() const{
 	return index;
 }
 
-//ToggleOnOff: Flip the switch
-bool Router::ToggleOnOff() {
-	isRunning = !isRunning;
+bool Router::GetRunning() const{
 	return isRunning;
 }
 
