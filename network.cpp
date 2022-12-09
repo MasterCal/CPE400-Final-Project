@@ -370,7 +370,7 @@ Packet* Network::CreatePacket(int bufferSize){
 
 //This function forwards each packet in the each router's buffer
 void Network::ForwardPacket(){
-	for(int i = 0; i <= 7; i++)
+	for(int i = 0; i < graphSize; i++)
 	{
 		if(routerNetwork[i]->buffer.empty() == false)
 		{
