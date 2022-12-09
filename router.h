@@ -30,6 +30,9 @@ class Router{
 		int GetIndex() const;
 		bool GetRunning() const;
 
+		vector<Packet*> buffer;
+		int bufferSize = 4096;
+
 	protected:
 		friend bool operator==(const Router&, const Router&);
 
@@ -44,8 +47,8 @@ class Router{
 		//do we implement a forwarding table?
 		// for simplicity, it could just track path to final router?
 
-		//vector<Packet*> buffer;
-		int bufferSize = 4096;
+		
+		
 		int bufferDelay = 100;
 		int propagationDelay = 1;
 		int transmissionDelay = 2;

@@ -16,6 +16,7 @@ using namespace std;
 int NO_PARENT = -1;
 
 struct Packet {
+	int id;
 	int size;
 	bool requiresACK;
 	Router* srcRouter;
@@ -30,6 +31,8 @@ struct Packet {
 		srcRouter = _srcRouter; 
 		destRouter = _destRouter;
 	}
+
+	~Packet();
 };
 
 class Network {
