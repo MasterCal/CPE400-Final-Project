@@ -355,7 +355,7 @@ vector<vector<int>> Network::DeleteLastColumn(vector<vector<int>> original){
     }
     return result;
 }*/
-/*
+
 //This function creates packet objects that will be stored in the router buffers. For simplicity, all the packets will have a source
 //address of Router 0 and a destination address of Router 7
 Packet* Network::CreatePacket(int bufferSize){
@@ -369,6 +369,43 @@ Packet* Network::CreatePacket(int bufferSize){
 }
 
 //This function forwards each packet in the each router's buffer
-void ForwardPacket(){
-	
-}*/
+void Network::ForwardPacket(){
+	for(int i = 0; i < graphSize; i++)
+	{
+		if(routerNetwork[i]->buffer.empty() == false)
+		{
+			if(routerNetwork[forwardTable[0]]->bufferSize >= routerNetwork[i]->buffer[0]->size) // receiving router able to receive packet
+			{
+				if(routerNetwork[i]->propagationDelay == 0)
+				{
+					if(routerNetwork[i]->GetRunning())
+					{
+						//Place packet in next router's buffer, remove packet from first router's buffer
+						routerNetwork[forwardTable[i]]->buffer.push_back(&routerNetwork[i]->buffer[0]);
+						routerNetwork[i]->buffer.erase(routerNetwork[i]->buffer.begin());
+						cout << "Packet " << routerNetwork[forwardTable[0]]->buffer.back()->id << " transmitted from router " << i << " to router " << routerNetwork[forwardTable[0]] << ".\n"; 
+						if(routerNetwork[i] == routerNetwork[forwardTable[i]])
+						{
+							cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " reached final destination.";
+							//call destructor
+							routerNetwork[forwardTable[i]]->buffer.pop_back();
+							successfulTransmissions++;
+						}
+					}
+					else
+					{
+						cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " lost due link failure.";
+						//Packet* lostPacket = routerNetwork[i]->buffer.begin();
+						routerNetwork[i]->buffer.erase(routerNetwork[i]->buffer.begin());
+						//lostPacket~Packet();
+					}
+					routerNetwork[i]->propagationDelay = 1;
+				}
+				else //packet is processing
+				{
+					routerNetwork[i]->propagationDelay--;
+				}
+			} // else wait to transmit, or find alternative path?
+		} // buffer is empty
+	}
+}
