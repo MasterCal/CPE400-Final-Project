@@ -180,7 +180,6 @@ int Network::Simulation() {
 }
 
 
-
 // -- DIJSKTRA FUNCTION --
 // implementation of single source shortest path algorithm
 void Network::Dijsktra(vector<vector<int> > weightGraph, int sourceRouter){
@@ -306,3 +305,21 @@ vector<vector<int>> Network::DeleteLastColumn(vector<vector<int>> original){
     }
     return result;
 }
+
+//This function creates packet objects that will be stored in the router buffers. For simplicity, all the packets will have a source
+//address of Router 0 and a destination address of Router 7
+Packet* Network::CreatePacket(int bufferSize){
+	int packetSize = 100 + rand() % 1401; //set a size to be a random number between 100 and 1500 bytes
+	if(packetSize > bufferSize)
+	{
+		packetSize = bufferSize;
+	}
+	int needsACK = rand() % 2; // if the random number is even, the packet does not need an ACK; if it is odd, packet needs an ACK
+	return &Packet(packetSize, (bool) needsACK, routerNetwork[0], routerNetwork[7]);
+}
+
+//This function forwards each packet in the each router's buffer
+void ForwardPacket(){
+	
+}
+
