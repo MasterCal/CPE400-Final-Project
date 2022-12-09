@@ -59,8 +59,8 @@ void Network::CreateRouteTable() {
 				if (end == string::npos) end = line.length();
 				token = line.substr(start, end - start);
 				numToken = stoi(token);
-				if (numToken == 0 && newRow.size() < graphSize)
-					numToken = infinity;
+				//if (numToken == 0 && newRow.size() < graphSize)
+				//	numToken = infinity;
 
 				start = end + 1;
 				newRow.push_back(numToken);
