@@ -292,17 +292,5 @@ void Network::PrintPath(int router, vector<int> parents){
 	cout << router << " ";
 }
 
-vector<vector<int>> Network::DeleteLastColumn(vector<vector<int>> original){
-	vector<vector<int>> result;
-    int row_size = original.size();
-    int col_size = original[0].size();
-    
-    for (int i = 0; i < row_size; i++) {
-        vector<int> row;
-        for (int j = 0; j < col_size - 1; j++) {
-            row.push_back(original[i][j]);
-        }
-        result.push_back(row);
-    }
-    return result;
-}
+
+
