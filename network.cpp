@@ -381,14 +381,20 @@ void Network::ForwardPacket(){
 					if(routerNetwork[i]->GetRunning())
 					{
 						//Place packet in next router's buffer, remove packet from first router's buffer
-						routerNetwork[forwardTable[0]]->buffer.push_back(&routerNetwork[i]->buffer[0]);
+						routerNetwork[forwardTable[i]]->buffer.push_back(&routerNetwork[i]->buffer[0]);
 						routerNetwork[i]->buffer.erase(routerNetwork[i]->buffer.begin());
 						cout << "Packet " << routerNetwork[forwardTable[0]]->buffer.back()->id << " transmitted from router " << i << " to router " << routerNetwork[forwardTable[0]] << ".\n"; 
-					
+						if(routerNetwork[i] == routerNetwork[forwardTable[i]])
+						{
+							cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " reached final destination.";
+							//call destructor
+							routerNetwork[forwardTable[i]]->buffer.pop_back();
+							successfulTransmissions++;
+						}
 					}
 					else
 					{
-						cout << "Packet " << routerNetwork[forwardTable[0]]->buffer.back()->id << " lost due link failure.";
+						cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " lost due link failure.";
 						//Packet* lostPacket = routerNetwork[i]->buffer.begin();
 						routerNetwork[i]->buffer.erase(routerNetwork[i]->buffer.begin());
 						//lostPacket~Packet();

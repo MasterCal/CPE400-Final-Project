@@ -68,6 +68,9 @@ class Network {
 		int graphSize = 0;
 		int infinity = INT_MAX;
 
+		int numPackets;
+		int successfulTransmissions = 0;
+
 		bool status;
 
 		vector<Router*> routerNetwork;		// to track/modify the routers
