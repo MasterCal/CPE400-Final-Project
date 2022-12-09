@@ -32,6 +32,7 @@ class Router{
 
 		vector<Packet*> buffer;
 		int bufferSize = 4096;
+		int propagationDelay = 1;
 
 	protected:
 		friend bool operator==(const Router&, const Router&);
@@ -50,7 +51,7 @@ class Router{
 		
 		
 		int bufferDelay = 100;
-		int propagationDelay = 1;
+		
 		int transmissionDelay = 2;
 
 		int failChance = 5;
