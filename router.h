@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "network.h"
+#include "network.cpp"
 using namespace std;
 
 class Router;	//forward declaration
