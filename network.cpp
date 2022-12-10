@@ -195,6 +195,10 @@ int Network::Simulation() {
 		}
 		//Dijsktra(0);// DIJSKTRA CALL HERE
 		PrintGraph(ticks);	//dummy/test function
+
+		CreatePacket(ticks);
+		numPackets++;
+		ForwardPacket();
 		ticks++;
 	}
 

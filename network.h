@@ -68,7 +68,7 @@ class Network {
 		int graphSize = 0;
 		int infinity = INT_MAX;
 
-		int numPackets;
+		int numPackets = 0;
 		int successfulTransmissions = 0;
 
 		bool status;
