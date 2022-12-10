@@ -5,6 +5,7 @@
 #include <climits>
 #include <cstdlib>
 #include <ctime>
+#include "network.h"
 using namespace std;
 
 class Router;	//forward declaration
