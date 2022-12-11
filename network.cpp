@@ -198,13 +198,16 @@ int Network::Simulation() {
 		
 		if(ticks % 5 == 0)
 		{
-			CreatePacket(ticks + 1);
+			CreatePacket(ticks % 5 - 1);
 			numPackets++;
 		}
 		
 		ForwardPacket();
 		ticks++;
 	}
+	
+	cout << successfulTransmissions << " out of " << numPackets << " packets successfully transmitted.\n";
+	cout << "The average transmission time was " << (float) totalTime / successfulTransmissions << " ticks.\n";
 
 	return status;
 }
@@ -405,6 +408,7 @@ void Network::ForwardPacket(){
 						if(routerNetwork[i] == routerNetwork[forwardTable[i]])
 						{
 							cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " of size " << routerNetwork[forwardTable[i]]->buffer.back()->size << " bytes reached final destination and took " << routerNetwork[forwardTable[i]]->buffer.back()->timeTaken << " ticks to transmit.\n"; 
+							totalTime += routerNetwork[forwardTable[i]]->buffer.back()->timeTaken;
 							if(routerNetwork[forwardTable[i]]->buffer.back()->requiresACK == true)
 							{
 								cout << "Packet << routerNetwork[forwardTable[i]]->buffer.back()->id << " requires an ACK.\n";
