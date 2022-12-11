@@ -73,6 +73,7 @@ class Network{
 
 		int numPackets = 0;
 		int successfulTransmissions = 0;
+		int totalTime = 0; //placeholder variable to compute average time
 
 		bool status;
 
