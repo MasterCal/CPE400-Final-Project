@@ -195,9 +195,13 @@ int Network::Simulation() {
 		}
 //		PrintTable();
 		PrintGraph(ticks);	//dummy/test function
-
-		CreatePacket(ticks);
-		numPackets++;
+		
+		if(ticks % 5 == 0)
+		{
+			CreatePacket(ticks + 1);
+			numPackets++;
+		}
+		
 		ForwardPacket();
 		ticks++;
 	}
@@ -393,14 +397,20 @@ void Network::ForwardPacket(){
 				{
 					if(routerNetwork[i]->GetRunning())
 					{
+						routerNetwork[i]->buffer.begin()->timeTaken += 1;
 						//Place packet in next router's buffer, remove packet from first router's buffer
 						routerNetwork[forwardTable[i]]->buffer.push_back(routerNetwork[i]->buffer[0]);
 						routerNetwork[i]->buffer.erase(routerNetwork[i]->buffer.begin());
 						cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " transmitted from router " << i << " to router " << forwardTable[i] << ".\n"; 
 						if(routerNetwork[i] == routerNetwork[forwardTable[i]])
 						{
-							cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " reached final destination.\n";
-							//call destructor
+							cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " of size " << routerNetwork[forwardTable[i]]->buffer.back()->size << " bytes reached final destination and took " << routerNetwork[forwardTable[i]]->buffer.back()->timeTaken << " ticks to transmit.\n"; 
+							if(routerNetwork[forwardTable[i]]->buffer.back()->requiresACK == true)
+							{
+								cout << "Packet << routerNetwork[forwardTable[i]]->buffer.back()->id << " requires an ACK.\n";
+								Packet* newPacket = new Packet(0, 1, false, routerNetwork[graphSize - 1], routerNetwork[0]); //ACK packets set to ID 0 and don't need to be ACKed
+								routerNetwork[graphSize - 1]->buffer.push_back(newPacket);
+							}
 							routerNetwork[forwardTable[i]]->buffer.pop_back();
 							successfulTransmissions++;
 						}
@@ -417,8 +427,14 @@ void Network::ForwardPacket(){
 				else //packet is processing
 				{
 					routerNetwork[i]->propagationDelay--;
+					routerNetwork[i]->buffer.begin()->timeTaken += 1;
 				}
-			} // else wait to transmit, or find alternative path?
+			} // else wait to transmit
+			else
+			{
+				routerNetwork[i]->buffer.begin()->timeTaken += 1;
+				cout << "Packet << routerNetwork[forwardTable[i]]->buffer.back()->id << " delayed due to receiving buffer size.\n";	
+			}
 		} // buffer is empty
 	}
 }
