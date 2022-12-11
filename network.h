@@ -24,8 +24,9 @@ struct Packet {
 
 	Packet(){}
 
-	Packet(int _size, bool _requiresACK, Router* _srcRouter, Router* _destRouter)
+	Packet(int _id, int _size, bool _requiresACK, Router* _srcRouter, Router* _destRouter)
 	{
+		id = _id;
 		size = _size;
 		requiresACK = _requiresACK;
 		srcRouter = _srcRouter; 
@@ -35,7 +36,7 @@ struct Packet {
 	~Packet();
 };
 
-class Network {
+class Network{
 	public:
 		Network();
 		~Network();
@@ -54,13 +55,13 @@ class Network {
 		int Dijsktra(int sourceRouter);
 		void PrintSolutions(int source, vector<int> dist, vector<int> parents);
 		void PrintPath(int router, vector<int> parents);
-		int FindPath(int router, vector<int> parents);
+		int FindPath(int router, vector<int> dist, vector<int> parents);
 		//void PrintDistances(vector<int> &dist);
 		
-		//vector<vector<int>> DeleteLastColumn(vector<vector<int>> original);
+		void PrintTable();
 
-
-		Packet* CreatePacket(int);
+		//Packet* CreatePacket(int);
+		void CreatePacket(int);
 		void ForwardPacket();
 
 

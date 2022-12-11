@@ -69,9 +69,13 @@ int Router::RandEdgeWeight(Router* outRouter) {
 				weightIndex = rand() % 9;
 
 			// check to see if the link fails/turns on
-			if (linkFailNum < connections[i]->failChance) {
-				cout << "link between " << index << " and " << connections[i]->linkedRouter->index << " toggled" << endl;
+			if (linkFailNum <= connections[i]->failChance) {
 				connections[i]->isRunning = !connections[i]->isRunning;
+				cout << "link between " << index << " and " << connections[i]->linkedRouter->index << " toggled";
+				if (connections[i]->failChance)
+					cout << "on" << endl;
+				else 
+					cout << "off" << endl;	
 			}
 
 			//adjust the edge weight by the value in the array
