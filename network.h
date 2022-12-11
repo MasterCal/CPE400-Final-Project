@@ -19,6 +19,7 @@ struct Packet {
 	int id;
 	int size;
 	bool requiresACK;
+	int travelTime;
 	Router* srcRouter;
 	Router* destRouter;
 
@@ -29,6 +30,7 @@ struct Packet {
 		id = _id;
 		size = _size;
 		requiresACK = _requiresACK;
+		travelTime = 0;
 		srcRouter = _srcRouter; 
 		destRouter = _destRouter;
 	}
