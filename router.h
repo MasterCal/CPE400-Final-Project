@@ -5,11 +5,12 @@
 #include <climits>
 #include <cstdlib>
 #include <ctime>
-#include "network.h"
-#include "network.cpp"
+//#include "network.h"
+//#include "network.cpp"
 using namespace std;
 
 class Router;	//forward declaration
+struct Packet;
 
 struct RouterLink {
 	Router* linkedRouter;

@@ -99,7 +99,7 @@ Flow:
 void Network::CreateRouters() {
 	// Make [graphSize] routers, push them onto routerNetwork
 	for (int i = 0; i < graphSize; i++) {
-		// element 8 of a row in the weight graph is the fail chance
+		// final element of a row in the weight graph is the fail chance
 		Router* newRouter = new Router(i, weightGraph[i][graphSize]);
 		routerNetwork.push_back(newRouter);
 	}
@@ -193,10 +193,10 @@ int Network::Simulation() {
 			else
 				forwardTable[i] = i;
 		}
-		//Dijsktra(0);// DIJSKTRA CALL HERE
+//		PrintTable();
 		PrintGraph(ticks);	//dummy/test function
 
-		CreatePacket(ticks);
+		CreatePacket(ticks, ticks);
 		numPackets++;
 		ForwardPacket();
 		ticks++;
@@ -241,8 +241,7 @@ int Network::Dijsktra(int sourceRouter){
 	// have a parent
 	parents[sourceRouter] = NO_PARENT;
 
-	// Find shortest path for all
-	// vertices
+	// Find shortest path for all vertices
 	for (int i = 1; i < nVertices; i++) {
 
 		// Pick the minimum distance vertex
@@ -251,41 +250,44 @@ int Network::Dijsktra(int sourceRouter){
 		// always equal to startNode in
 		// first iteration.
 		int nearestVertex = -1;
-		int shortestDistance = INT_MAX;
+		int shortestDistance = infinity;
 		for (int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++) {
 			if (!added[vertexIndex] && shortestDistances[vertexIndex] < shortestDistance) {
 				nearestVertex = vertexIndex;
 				shortestDistance = shortestDistances[vertexIndex];
 			}
 		}
-		if (nearestVertex = -1)
-			nearestVertex = sourceRouter;
+		if (nearestVertex != -1) {
 
-		// Mark the picked vertex as
-		// processed
-		added[nearestVertex] = true;
+			// Mark the picked vertex as
+			// processed
+			added[nearestVertex] = true;
 
-		// Update dist value of the
-		// adjacent vertices of the
-		// picked vertex.
-		for (int vertexIndex = 0; vertexIndex < nVertices;
-			vertexIndex++) {
-			int edgeDistance
-				= weightGraph[nearestVertex]
-								[vertexIndex];
+			// Update dist value of the
+			// adjacent vertices of the
+			// picked vertex.
+			for (int vertexIndex = 0; vertexIndex < nVertices;
+				vertexIndex++) {
+				int edgeDistance = weightGraph[nearestVertex][vertexIndex];
 
-			if (edgeDistance > 0
-				&& ((shortestDistance + edgeDistance)
-					< shortestDistances[vertexIndex])) {
-				parents[vertexIndex] = nearestVertex;
-				shortestDistances[vertexIndex]
-					= shortestDistance + edgeDistance;
+				if (edgeDistance > 0 && ((shortestDistance + edgeDistance) 
+				< shortestDistances[vertexIndex])) {
+					parents[vertexIndex] = nearestVertex;
+					shortestDistances[vertexIndex] = shortestDistance + edgeDistance;
+				}
 			}
 		}
 	}
 
+	//If any shortest distances are still infinity, that router can't be reached
+	// so we loop it back to itself.
+	for (int i = 0; i < graphSize; i++) {
+		if (shortestDistances[i] == infinity)
+			parents[i] = NO_PARENT;
+	}
+
+	int routerIndex = FindPath(sourceRouter, shortestDistances, parents);
 	//PrintSolutions(sourceRouter, shortestDistances, parents);
-	int routerIndex = FindPath(sourceRouter, parents);
 	return routerIndex;
 }
 
@@ -297,13 +299,14 @@ void Network::PrintSolutions(int source, vector<int> dist, vector<int> parents){
 
 	for (int vertexIndex = 0; vertexIndex < nVertices;
 		vertexIndex++) {
-		if (vertexIndex != source) {
+		if (vertexIndex != source && dist[vertexIndex] != infinity) {
 			cout << "\n" << source << " -> ";
 			cout << vertexIndex << " \t\t ";
 			cout << dist[vertexIndex] << "\t\t";
 			PrintPath(vertexIndex, parents);
 		}
 	}
+	cout << endl << endl;
 }
 
 // each element in parents holds the index of the router leading to the source
@@ -313,6 +316,7 @@ router: index of current router
 parents: vector of indices of routers leading to source
 example:
 Outer Router:	Next Path
+0				-1
 1				0
 2				1
 3				0
@@ -322,16 +326,24 @@ Outer Router:	Next Path
 7				2
 0->1->2->7 is the path from 0 to 7
 */
-int Network::FindPath(int router, vector<int> parents) {
+int Network::FindPath(int router, vector<int> dist, vector<int> parents) {
 	int newIndex = graphSize - 1;
 
 	//if the parent of the last router is our current router, we're done
 	bool found = (parents[newIndex] == router);
 
+	// If the path to the final router is blocked, we link our source back to itself
+	if (dist[newIndex] == infinity) {
+		cout << "router " << router << " can't reach destination" << endl;
+		found = true;
+		newIndex = router;
+	}
+
 	while(!found) {
 		newIndex = parents[newIndex];
 		found = (parents[newIndex] == router);
 	}
+
 	return newIndex;
 }
 
@@ -344,32 +356,26 @@ void Network::PrintPath(int router, vector<int> parents){
 	PrintPath(parents[router], parents);
 	cout << router << " ";
 }
-/*
-vector<vector<int>> Network::DeleteLastColumn(vector<vector<int>> original){
-	vector<vector<int>> result;
-    int row_size = original.size();
-    int col_size = original[0].size();
-    
-    for (int i = 0; i < row_size; i++) {
-        vector<int> row;
-        for (int j = 0; j < col_size - 1; j++) {
-            row.push_back(original[i][j]);
-        }
-        result.push_back(row);
-    }
-    return result;
-}*/
+
+void Network::PrintTable() {
+	cout << "Source\t\tDest\n";
+	for (int i = 0; i < graphSize; i++) {
+		cout << i << "\t\t" << forwardTable[i] << endl;
+	}
+}
 
 //This function creates packet objects that will be stored in the router buffers. For simplicity, all the packets will have a source
-//address of Router 0 and a destination address of Router 7
-Packet* Network::CreatePacket(int bufferSize){
+//address of Router 0 and a destination address of the final Router
+void Network::CreatePacket(int bufferSize, int ticks){
 	int packetSize = 100 + rand() % 1401; //set a size to be a random number between 100 and 1500 bytes
 	if(packetSize > bufferSize)
 	{
 		packetSize = bufferSize;
 	}
 	int needsACK = rand() % 2; // if the random number is even, the packet does not need an ACK; if it is odd, packet needs an ACK
-	return &Packet(packetSize, (bool) needsACK, routerNetwork[0], routerNetwork[7]);
+	Packet* newPacket = new Packet(ticks, packetSize, (bool)needsACK, routerNetwork[0], routerNetwork[graphSize - 1]);
+	routerNetwork[0]->buffer.push_back(newPacket);
+	//return &Packet(packetSize, (bool) needsACK, routerNetwork[0], routerNetwork[graphSize - 1]);
 }
 
 //This function forwards each packet in the each router's buffer
@@ -385,12 +391,12 @@ void Network::ForwardPacket(){
 					if(routerNetwork[i]->GetRunning())
 					{
 						//Place packet in next router's buffer, remove packet from first router's buffer
-						routerNetwork[forwardTable[i]]->buffer.push_back(&routerNetwork[i]->buffer[0]);
+						routerNetwork[forwardTable[i]]->buffer.push_back(routerNetwork[i]->buffer[0]);
 						routerNetwork[i]->buffer.erase(routerNetwork[i]->buffer.begin());
-						cout << "Packet " << routerNetwork[forwardTable[0]]->buffer.back()->id << " transmitted from router " << i << " to router " << routerNetwork[forwardTable[0]] << ".\n"; 
+						cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " transmitted from router " << i << " to router " << forwardTable[i] << ".\n"; 
 						if(routerNetwork[i] == routerNetwork[forwardTable[i]])
 						{
-							cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " reached final destination.";
+							cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " reached final destination.\n";
 							//call destructor
 							routerNetwork[forwardTable[i]]->buffer.pop_back();
 							successfulTransmissions++;
@@ -398,7 +404,7 @@ void Network::ForwardPacket(){
 					}
 					else
 					{
-						cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " lost due link failure.";
+						cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " lost due link failure.\n";
 						//Packet* lostPacket = routerNetwork[i]->buffer.begin();
 						routerNetwork[i]->buffer.erase(routerNetwork[i]->buffer.begin());
 						//lostPacket~Packet();
