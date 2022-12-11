@@ -61,7 +61,7 @@ class Network{
 		void PrintTable();
 
 		//Packet* CreatePacket(int);
-		void CreatePacket(int, int);
+		void CreatePacket(int);
 		void ForwardPacket();
 
 

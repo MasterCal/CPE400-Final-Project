@@ -196,7 +196,7 @@ int Network::Simulation() {
 //		PrintTable();
 		PrintGraph(ticks);	//dummy/test function
 
-		CreatePacket(ticks, ticks);
+		CreatePacket(ticks);
 		numPackets++;
 		ForwardPacket();
 		ticks++;
@@ -291,8 +291,8 @@ int Network::Dijsktra(int sourceRouter){
 	return routerIndex;
 }
 
-// --  --
-// 
+// Test function, prints the paths from source router to all other routers in network
+// Calls the recursive PrintPath function to print the actual router indices of the path
 void Network::PrintSolutions(int source, vector<int> dist, vector<int> parents){
 	int nVertices = dist.size();
 	cout << "Vertex\t Distance\tPath";
@@ -316,7 +316,7 @@ router: index of current router
 parents: vector of indices of routers leading to source
 example:
 Outer Router:	Next Path
-0				-1
+0(source)		-1
 1				0
 2				1
 3				0
@@ -334,7 +334,7 @@ int Network::FindPath(int router, vector<int> dist, vector<int> parents) {
 
 	// If the path to the final router is blocked, we link our source back to itself
 	if (dist[newIndex] == infinity) {
-		cout << "router " << router << " can't reach destination" << endl;
+		//cout << "router " << router << " can't reach destination" << endl;
 		found = true;
 		newIndex = router;
 	}
@@ -347,6 +347,8 @@ int Network::FindPath(int router, vector<int> dist, vector<int> parents) {
 	return newIndex;
 }
 
+// Recursive test function, prints the path from the vertexIndex router from PrintSolutions
+//  until it reaches the source router
 void Network::PrintPath(int router, vector<int> parents){
 	// Base case : Source node has
 	// been processed
@@ -366,14 +368,15 @@ void Network::PrintTable() {
 
 //This function creates packet objects that will be stored in the router buffers. For simplicity, all the packets will have a source
 //address of Router 0 and a destination address of the final Router
-void Network::CreatePacket(int bufferSize, int ticks){
+void Network::CreatePacket(int tick){
+	int bufferSize = routerNetworkp[0]->bufferSize;
 	int packetSize = 100 + rand() % 1401; //set a size to be a random number between 100 and 1500 bytes
 	if(packetSize > bufferSize)
 	{
 		packetSize = bufferSize;
 	}
 	int needsACK = rand() % 2; // if the random number is even, the packet does not need an ACK; if it is odd, packet needs an ACK
-	Packet* newPacket = new Packet(ticks, packetSize, (bool)needsACK, routerNetwork[0], routerNetwork[graphSize - 1]);
+	Packet* newPacket = new Packet(tick, packetSize, (bool)needsACK, routerNetwork[0], routerNetwork[graphSize - 1]);
 	routerNetwork[0]->buffer.push_back(newPacket);
 	//return &Packet(packetSize, (bool) needsACK, routerNetwork[0], routerNetwork[graphSize - 1]);
 }
