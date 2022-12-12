@@ -7,11 +7,15 @@ CreateRouters: uses edge weight graph to create routers and track links
 */
 Network::Network() {
 	CreateRouteTable();	//populate router graph table
+	vector<int> tempTable(graphSize);
 	if(status) {
 		CreateRouters();
 		//	make dummy forwarding table
 		for (int i = 0; i < graphSize; i++) {
-			forwardTable.push_back(i);
+			for (int j = 0; j < graphSize; j++) {
+				tempTable[j] = i;
+			}
+			forwardTable.push_back(tempTable);
 		}
 	}
 }
@@ -181,32 +185,44 @@ int Network::Simulation() {
 	int status = 0;
 
 	while(running) {
-		cout << "step " << ticks << endl;
-		if(ticks == 10) 
-			running = false;
+		cout << "\nstep " << ticks << ":" << endl;
+		//if(ticks == 100) 
+		//	running = false;
 
 		UpdateGraph();	//update edge weights, check fail chance
-		for (int i = 0; i < graphSize - 1; i++) {
-			//cout << "Dijsktra for " << i << endl;
-			if (routerNetwork[i]->GetRunning())
-				forwardTable[i] = Dijsktra(i);
-			else
-				forwardTable[i] = i;
+		for (int i = 0; i < graphSize; i++) {
+			//Calculate Dijsktra's for each router
+			//	this also populates the forwarding tables
+			Dijsktra(i);
 		}
-//		PrintTable();
-		PrintGraph(ticks);	//dummy/test function
-		
-		if(ticks % 5 == 0)
+		//Demo/test functions
+		//PrintTable();
+		//PrintGraph(ticks);
+
+		// Generate a new packet every five ticks
+		if(ticks % 5 == 0 && ticks <= 25)
 		{
-			CreatePacket(ticks % 5 - 1);
+			CreatePacket(ticks / 5);
 			numPackets++;
 		}
 		
-		ForwardPacket();
+		// Returns false when there are no packets in the simulation
+		running = ForwardPacket();
+		// We want to make sure the simulation
+		// runs until all packets are generated
+		
+		if (ticks < 25) {
+			running = true;
+		}
+		//no reason for the sim to take 1000 steps
+		else if (ticks >= 200){
+			cout << "200 ticks reached, sim stopping\n";
+			running = false;
+		}
 		ticks++;
 	}
 	
-	cout << successfulTransmissions << " out of " << numPackets << " packets successfully transmitted.\n";
+	cout << endl << successfulTransmissions << " out of " << numPackets << " packets successfully transmitted.\n";
 	cout << "The average transmission time was " << (float) totalTime / successfulTransmissions << " ticks.\n";
 
 	return status;
@@ -215,7 +231,7 @@ int Network::Simulation() {
 // -- DIJSKTRA FUNCTION --
 // implementation of single source shortest path algorithm
 // returns: Index of router to travel to in order to reach final router
-int Network::Dijsktra(int sourceRouter){
+void Network::Dijsktra(int sourceRouter){
 	int nVertices = graphSize;
 
 	// shortestDistances[i] will hold the
@@ -293,9 +309,10 @@ int Network::Dijsktra(int sourceRouter){
 			parents[i] = NO_PARENT;
 	}
 
-	int routerIndex = FindPath(sourceRouter, shortestDistances, parents);
+	FindPath(sourceRouter, shortestDistances, parents);
+	//int routerIndex = FindPath(sourceRouter, shortestDistances, parents);
 	//PrintSolutions(sourceRouter, shortestDistances, parents);
-	return routerIndex;
+	//return routerIndex;
 }
 
 // Test function, prints the paths from source router to all other routers in network
@@ -318,24 +335,49 @@ void Network::PrintSolutions(int source, vector<int> dist, vector<int> parents){
 
 // each element in parents holds the index of the router leading to the source
 /*
-FindPath: returns the index of the next router leading to the destination
+FindPath: finds the index of the next router leading to the destinations
 router: index of current router
+dist: vector of distances from 'router' to each router
 parents: vector of indices of routers leading to source
 example:
-Outer Router:	Next Path
-0(source)		-1
-1				0
-2				1
-3				0
-4				1
-5				0
-6				7
-7				2
+Router:			Parents:	forwardTable:
+0(source)		-1			(0)
+1				0			(1)
+2				1			(1) 2
+3				0			(3)
+4				1			(1) 4
+5				0			(5)
+6				7			(1) 2 7
+7				2			(1) 2
 0->1->2->7 is the path from 0 to 7
+so forwardTable[0][7] would have a 1
 */
-int Network::FindPath(int router, vector<int> dist, vector<int> parents) {
-	int newIndex = graphSize - 1;
+void Network::FindPath(int router, vector<int> dist, vector<int> parents) {
+	vector<int> pathBuffer(graphSize);
+	bool found;
 
+	//newIndex represents our destination router from 'int router'
+	for (int newIndex = 0; newIndex < graphSize; newIndex++) {
+		//grab the current router index
+		pathBuffer[newIndex] = newIndex;
+		// if the parent of the destination is our current router, we're done
+		found = (parents[pathBuffer[newIndex]] == router);
+		//found = (parents[newIndex] == router);
+
+		// if the router can't be reached, or the current router has no parent
+		if (dist[newIndex] == infinity || parents[pathBuffer[newIndex]] == NO_PARENT) {
+			found = true;
+			pathBuffer[newIndex] = router;
+		}
+
+		while (!found) {
+			//We store the parent of the current router
+			pathBuffer[newIndex] = parents[pathBuffer[newIndex]];
+			// if the parent of that router is the source, we're done
+			found = (parents[pathBuffer[newIndex]] == router);
+		}
+	}
+	/*
 	//if the parent of the last router is our current router, we're done
 	bool found = (parents[newIndex] == router);
 
@@ -349,9 +391,10 @@ int Network::FindPath(int router, vector<int> dist, vector<int> parents) {
 	while(!found) {
 		newIndex = parents[newIndex];
 		found = (parents[newIndex] == router);
-	}
+	}*/
+	forwardTable[router] = pathBuffer;
 
-	return newIndex;
+	//return newIndex;
 }
 
 // Recursive test function, prints the path from the vertexIndex router from PrintSolutions
@@ -369,14 +412,18 @@ void Network::PrintPath(int router, vector<int> parents){
 void Network::PrintTable() {
 	cout << "Source\t\tDest\n";
 	for (int i = 0; i < graphSize; i++) {
-		cout << i << "\t\t" << forwardTable[i] << endl;
+		cout << i << "\t\t";
+		for (int j = 0; j < graphSize; j++) {
+			cout << forwardTable[i][j] << "\t";
+		}
+		cout << endl;
 	}
 }
 
 //This function creates packet objects that will be stored in the router buffers. For simplicity, all the packets will have a source
 //address of Router 0 and a destination address of the final Router
 void Network::CreatePacket(int tick){
-	int bufferSize = routerNetworkp[0]->bufferSize;
+	int bufferSize = routerNetwork[0]->bufferSize;
 	int packetSize = 100 + rand() % 1401; //set a size to be a random number between 100 and 1500 bytes
 	if(packetSize > bufferSize)
 	{
@@ -389,39 +436,55 @@ void Network::CreatePacket(int tick){
 }
 
 //This function forwards each packet in the each router's buffer
-void Network::ForwardPacket(){
+bool Network::ForwardPacket(){
+	//tracking number of packets in the network at this moment
+	int dest, numPacketsNow = 0;
+	Packet* tempPacket;
 	for(int i = 0; i < graphSize; i++)
 	{
+		// if router i's packet buffer isn't empty
 		if(routerNetwork[i]->buffer.empty() == false)
 		{
-			if(routerNetwork[forwardTable[0]]->bufferSize >= routerNetwork[i]->buffer[0]->size) // receiving router able to receive packet
+			numPacketsNow += routerNetwork[i]->buffer.size();
+
+			tempPacket = routerNetwork[i]->buffer[0];
+			dest = tempPacket->destRouter->GetIndex();
+
+			// if the size of the destination buffer is greater than the size of the incoming packet
+			if(routerNetwork[forwardTable[i][dest]]->bufferSize >= routerNetwork[i]->buffer[0]->size)
 			{
 				if(routerNetwork[i]->propagationDelay == 0)
 				{
 					if(routerNetwork[i]->GetRunning())
 					{
-						routerNetwork[i]->buffer.begin()->timeTaken += 1;
+						routerNetwork[i]->buffer[0]->travelTime++;
 						//Place packet in next router's buffer, remove packet from first router's buffer
-						routerNetwork[forwardTable[i]]->buffer.push_back(routerNetwork[i]->buffer[0]);
+						routerNetwork[forwardTable[i][dest]]->buffer.push_back(routerNetwork[i]->buffer[0]);
 						routerNetwork[i]->buffer.erase(routerNetwork[i]->buffer.begin());
-						cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " transmitted from router " << i << " to router " << forwardTable[i] << ".\n"; 
-						if(routerNetwork[i] == routerNetwork[forwardTable[i]])
+						if (i != forwardTable[i][dest])
+							cout << "Packet " << routerNetwork[forwardTable[i][dest]]->buffer.back()->id << " transmitted from router " << i << " to router " << forwardTable[i][dest] << ".\n";
+						if (routerNetwork[forwardTable[i][dest]]->buffer.back()->destRouter == routerNetwork[forwardTable[i][dest]])
 						{
-							cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " of size " << routerNetwork[forwardTable[i]]->buffer.back()->size << " bytes reached final destination and took " << routerNetwork[forwardTable[i]]->buffer.back()->timeTaken << " ticks to transmit.\n"; 
-							totalTime += routerNetwork[forwardTable[i]]->buffer.back()->timeTaken;
-							if(routerNetwork[forwardTable[i]]->buffer.back()->requiresACK == true)
+							cout << "Packet " << routerNetwork[forwardTable[i][dest]]->buffer.back()->id << " of size " << routerNetwork[forwardTable[i][dest]]->buffer.back()->size << " bytes reached final destination and took " << routerNetwork[forwardTable[i][dest]]->buffer.back()->travelTime << " ticks to transmit.\n"; 
+							totalTime += routerNetwork[forwardTable[i][dest]]->buffer.back()->travelTime;
+							tempPacket = routerNetwork[forwardTable[i][dest]]->buffer.back();
+							routerNetwork[forwardTable[i][dest]]->buffer.pop_back();
+							if(tempPacket->requiresACK)
 							{
-								cout << "Packet << routerNetwork[forwardTable[i]]->buffer.back()->id << " requires an ACK.\n";
-								Packet* newPacket = new Packet(0, 1, false, routerNetwork[graphSize - 1], routerNetwork[0]); //ACK packets set to ID 0 and don't need to be ACKed
+								cout << "Packet " << tempPacket->id << " requires an ACK.\n";
+								Packet* newPacket = new Packet(0, 1, false, tempPacket->destRouter, tempPacket->srcRouter); //ACK packets set to ID 0 and don't need to be ACKed
 								routerNetwork[graphSize - 1]->buffer.push_back(newPacket);
+								numPacketsNow++;
+								numPackets++;
 							}
-							routerNetwork[forwardTable[i]]->buffer.pop_back();
+							//routerNetwork[forwardTable[i]]->buffer.pop_back();
 							successfulTransmissions++;
+							numPacketsNow--;
 						}
 					}
 					else
 					{
-						cout << "Packet " << routerNetwork[forwardTable[i]]->buffer.back()->id << " lost due link failure.\n";
+						cout << "Packet " << routerNetwork[forwardTable[i][dest]]->buffer.back()->id << " lost due link failure.\n";
 						//Packet* lostPacket = routerNetwork[i]->buffer.begin();
 						routerNetwork[i]->buffer.erase(routerNetwork[i]->buffer.begin());
 						//lostPacket~Packet();
@@ -431,14 +494,16 @@ void Network::ForwardPacket(){
 				else //packet is processing
 				{
 					routerNetwork[i]->propagationDelay--;
-					routerNetwork[i]->buffer.begin()->timeTaken += 1;
+					routerNetwork[i]->buffer[0]->travelTime++;
 				}
 			} // else wait to transmit
 			else
 			{
-				routerNetwork[i]->buffer.begin()->timeTaken += 1;
-				cout << "Packet << routerNetwork[forwardTable[i]]->buffer.back()->id << " delayed due to receiving buffer size.\n";	
+				routerNetwork[i]->buffer[0]->travelTime++;
+				cout << "Packet" << routerNetwork[forwardTable[i][dest]]->buffer.back()->id << " delayed due to receiving buffer size.\n";	
 			}
 		} // buffer is empty
 	}
+	//We close the simulation once all packets are gone
+	return (numPacketsNow != 0);
 }

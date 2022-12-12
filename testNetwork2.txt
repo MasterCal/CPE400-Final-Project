@@ -1,0 +1,13 @@
+8
+0	15	0	15	0	100	0	0	0
+15	0	15	15	15	0	0	0	0
+0	15	0	0	15	0	0	15	0
+15	15	0	0	15	0	0	0	0
+0	15	15	15	0	0	0	15	0
+100	0	0	0	0	0	100	0	0
+0	0	0	0	0	100	0	100	0
+0	0	15	0	15	0	100	0	0
+
+NOTE: Copy these values into networkTable.txt, save that, and run the program if you change the default values
+
+This test network demonstrates an optimal network environment

@@ -19,7 +19,7 @@ struct Packet {
 	int id;
 	int size;
 	bool requiresACK;
-	int travelTime;
+	int travelTime = 0;
 	Router* srcRouter;
 	Router* destRouter;
 
@@ -54,17 +54,17 @@ class Network{
 		int Simulation();
 
 		int MinimumDistance(int dist[], bool sptSet[]);
-		int Dijsktra(int sourceRouter);
+		void Dijsktra(int sourceRouter);
 		void PrintSolutions(int source, vector<int> dist, vector<int> parents);
 		void PrintPath(int router, vector<int> parents);
-		int FindPath(int router, vector<int> dist, vector<int> parents);
+		void FindPath(int router, vector<int> dist, vector<int> parents);
 		//void PrintDistances(vector<int> &dist);
 		
 		void PrintTable();
 
 		//Packet* CreatePacket(int);
 		void CreatePacket(int);
-		void ForwardPacket();
+		bool ForwardPacket();
 
 
 	private:
@@ -79,7 +79,7 @@ class Network{
 
 		vector<Router*> routerNetwork;		// to track/modify the routers
 		vector<vector<int>> weightGraph;
-		vector<int> forwardTable;
+		vector<vector<int>> forwardTable;
 		// int weightGraph[numberOfRouters][numberOfRouters];	//2D graph weight table
 };
 #endif

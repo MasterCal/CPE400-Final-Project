@@ -124,14 +124,14 @@ bool Router::FailChance() {
 	//generate a random number between 1-100
 	int failNum = rand() % 100 + 1;
 
-	if(failNum < failChance) {
+	if(failNum <= failChance) {
 		isRunning = !isRunning;
 		//this print is just for testing
 		cout << "router " << index << " toggled ";
 		if (isRunning)
-			cout << "on" << endl;
+			cout << " on" << endl;
 		else
-			cout << "off" << endl;
+			cout << " off" << endl;
 	}
 
 	return isRunning;
