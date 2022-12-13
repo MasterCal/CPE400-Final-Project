@@ -23,6 +23,7 @@ Network::Network() {
 Network::~Network() {
 	routerNetwork.clear();
 	weightGraph.clear();
+	forwardTable.clear();
 }
 
 /*
@@ -200,23 +201,23 @@ int Network::Simulation() {
 		//PrintGraph(ticks);
 
 		// Generate a new packet every five ticks
-		if(ticks % 5 == 0 && ticks <= 25)
+		if(ticks % 5 == 0 && ticks <= 50)
 		{
-			CreatePacket(ticks / 5);
+			CreatePacket(ticks / 5 + 1);
+			cout << "Created packet " << ticks / 5 + 1 << endl;
 			numPackets++;
 		}
 		
 		// Returns false when there are no packets in the simulation
 		running = ForwardPacket();
-		// We want to make sure the simulation
-		// runs until all packets are generated
-		
-		if (ticks < 25) {
+
+		// make sure the simulation runs until all packets are generated
+		if (ticks < 50) {
 			running = true;
 		}
 		//no reason for the sim to take 1000 steps
-		else if (ticks >= 200){
-			cout << "200 ticks reached, sim stopping\n";
+		else if (ticks >= 500){
+			cout << "500 ticks reached, simulation aborting\n";
 			running = false;
 		}
 		ticks++;

@@ -47,7 +47,7 @@ return:			new weight corresponding to that router link
 */
 int Router::RandEdgeWeight(Router* outRouter) {
 	// start by setting the new weight to infinity
-	int newWeight = 0;
+	int newWeight = 0;Router.cpp
 	int linkFailNum = rand() % 100 + 1;
 
 	for (int i = 0; i < connections.size(); i++) {
@@ -58,7 +58,7 @@ int Router::RandEdgeWeight(Router* outRouter) {
 				3-5 are zero, and 6-8 are positive.*/
 			if (connections[i]->weight > infinity - 4)
 				//if our edge weight is near infinity, we don't want to add to it
-				// so we only between the first six indices
+				// so we only use the first six indices
 				weightIndex = rand() % 6;
 			else if (connections[i]->weight < 4)
 				//if our edge weight is near zero, we don't want to subtract from it
@@ -71,8 +71,8 @@ int Router::RandEdgeWeight(Router* outRouter) {
 			// check to see if the link fails/turns on
 			if (linkFailNum <= connections[i]->failChance) {
 				connections[i]->isRunning = !connections[i]->isRunning;
-				cout << "link between " << index << " and " << connections[i]->linkedRouter->index << " toggled";
-				if (connections[i]->failChance)
+				cout << "link between " << index << " and " << connections[i]->linkedRouter->index << " toggled ";
+				if (connections[i]->isRunning)
 					cout << "on" << endl;
 				else 
 					cout << "off" << endl;	
@@ -129,9 +129,9 @@ bool Router::FailChance() {
 		//this print is just for testing
 		cout << "router " << index << " toggled ";
 		if (isRunning)
-			cout << " on" << endl;
+			cout << "on" << endl;
 		else
-			cout << " off" << endl;
+			cout << "off" << endl;
 	}
 
 	return isRunning;
