@@ -1,0 +1,451 @@
+step 0:
+router 4 toggled off
+Created packet 1
+
+step 1:
+Packet 1 transmitted from router 0 to router 1.
+
+step 2:
+link between 1 and 4 toggled off
+router 2 toggled off
+Packet 1 transmitted from router 1 to router 0.
+
+step 3:
+router 2 toggled on
+
+step 4:
+Packet 1 transmitted from router 0 to router 1.
+
+step 5:
+router 2 toggled off
+router 3 toggled off
+link between 5 and 6 toggled off
+Created packet 2
+
+step 6:
+router 1 toggled off
+router 4 toggled on
+
+step 7:
+Packet 1 lost due link failure.
+
+step 8:
+
+step 9:
+router 1 toggled on
+
+step 10:
+router 2 toggled on
+router 3 toggled on
+Created packet 3
+Packet 2 transmitted from router 0 to router 3.
+
+step 11:
+router 2 toggled off
+Packet 2 transmitted from router 3 to router 4.
+
+step 12:
+router 4 toggled off
+Packet 2 lost due link failure.
+
+step 13:
+router 3 toggled off
+
+step 14:
+router 2 toggled on
+link between 5 and 6 toggled on
+Packet 3 transmitted from router 0 to router 1.
+
+step 15:
+router 2 toggled off
+Created packet 4
+Packet 3 transmitted from router 1 to router 0.
+
+step 16:
+router 4 toggled on
+Packet 4 transmitted from router 0 to router 5.
+
+step 17:
+router 1 toggled off
+router 5 toggled off
+Packet 4 lost due link failure.
+
+step 18:
+router 1 toggled on
+router 2 toggled on
+router 3 toggled on
+Packet 3 transmitted from router 0 to router 1.
+
+step 19:
+router 2 toggled off
+Packet 3 transmitted from router 1 to router 3.
+
+step 20:
+router 1 toggled off
+router 2 toggled on
+Created packet 5
+Packet 3 transmitted from router 3 to router 4.
+
+step 21:
+router 3 toggled off
+router 4 toggled off
+router 6 toggled off
+Packet 3 lost due link failure.
+
+step 22:
+
+step 23:
+router 1 toggled on
+router 4 toggled on
+Packet 5 transmitted from router 0 to router 1.
+
+step 24:
+router 1 toggled off
+router 2 toggled off
+Packet 5 lost due link failure.
+
+step 25:
+router 1 toggled on
+router 5 toggled on
+Created packet 6
+
+step 26:
+router 1 toggled off
+
+step 27:
+router 6 toggled on
+
+step 28:
+router 3 toggled on
+router 4 toggled off
+Packet 6 transmitted from router 0 to router 5.
+
+step 29:
+router 4 toggled on
+Packet 6 transmitted from router 5 to router 0.
+
+step 30:
+link between 5 and 6 toggled off
+Created packet 7
+
+step 31:
+link between 1 and 3 toggled off
+router 4 toggled off
+
+step 32:
+router 1 toggled on
+router 2 toggled on
+
+step 33:
+router 5 toggled off
+Packet 7 transmitted from router 0 to router 1.
+
+step 34:
+router 1 toggled off
+Packet 7 lost due link failure.
+
+step 35:
+Created packet 8
+
+step 36:
+router 1 toggled on
+
+step 37:
+Packet 8 transmitted from router 0 to router 1.
+
+step 38:
+router 1 toggled off
+Packet 8 lost due link failure.
+
+step 39:
+router 2 toggled off
+router 6 toggled off
+
+step 40:
+Created packet 9
+
+step 41:
+router 6 toggled on
+
+step 42:
+router 2 toggled on
+router 3 toggled off
+
+step 43:
+router 2 toggled off
+
+step 44:
+
+step 45:
+router 3 toggled on
+Created packet 10
+
+step 46:
+router 3 toggled off
+
+step 47:
+
+step 48:
+router 4 toggled on
+
+step 49:
+
+step 50:
+link between 0 and 5 toggled off
+router 2 toggled on
+Created packet 11
+
+step 51:
+router 2 toggled off
+router 3 toggled on
+router 4 toggled off
+
+step 52:
+router 1 toggled on
+
+step 53:
+router 1 toggled off
+router 2 toggled on
+router 4 toggled on
+Packet 9 transmitted from router 0 to router 3.
+
+step 54:
+router 2 toggled off
+Packet 9 transmitted from router 3 to router 4.
+
+step 55:
+link between 3 and 4 toggled off
+Packet 9 transmitted from router 4 to router 7.
+Packet 9 of size 606 bytes reached final destination and took 10 ticks to transmit.
+Packet 9 requires an ACK.
+
+step 56:
+router 4 toggled off
+
+step 57:
+router 1 toggled on
+
+step 58:
+router 2 toggled on
+router 4 toggled on
+Packet 0 transmitted from router 7 to router 4.
+
+step 59:
+router 1 toggled off
+router 2 toggled off
+
+step 60:
+router 2 toggled on
+
+step 61:
+router 4 toggled off
+
+step 62:
+router 3 toggled off
+Packet 0 lost due link failure.
+
+step 63:
+router 3 toggled on
+
+step 64:
+router 1 toggled on
+
+step 65:
+router 1 toggled off
+
+step 66:
+
+step 67:
+router 4 toggled on
+
+step 68:
+link between 2 and 7 toggled off
+router 6 toggled off
+
+step 69:
+router 4 toggled off
+
+step 70:
+
+step 71:
+
+step 72:
+router 3 toggled off
+
+step 73:
+
+step 74:
+
+step 75:
+
+step 76:
+router 1 toggled on
+
+step 77:
+
+step 78:
+router 3 toggled on
+link between 3 and 4 toggled on
+
+step 79:
+
+step 80:
+router 2 toggled off
+router 4 toggled on
+
+step 81:
+router 1 toggled off
+router 3 toggled off
+router 5 toggled on
+
+step 82:
+router 2 toggled on
+
+step 83:
+router 2 toggled off
+router 4 toggled off
+
+step 84:
+router 4 toggled on
+
+step 85:
+router 3 toggled on
+router 4 toggled off
+
+step 86:
+
+step 87:
+router 3 toggled off
+
+step 88:
+router 2 toggled on
+
+step 89:
+router 1 toggled on
+
+step 90:
+router 2 toggled off
+router 3 toggled on
+
+step 91:
+router 1 toggled off
+router 2 toggled on
+router 4 toggled on
+Packet 10 transmitted from router 0 to router 3.
+
+step 92:
+router 2 toggled off
+Packet 10 transmitted from router 3 to router 4.
+
+step 93:
+router 3 toggled off
+link between 4 and 7 toggled off
+
+step 94:
+router 4 toggled off
+
+step 95:
+router 1 toggled on
+router 2 toggled on
+Packet 10 lost due link failure.
+
+step 96:
+router 2 toggled off
+
+step 97:
+
+step 98:
+
+step 99:
+
+step 100:
+router 3 toggled on
+router 4 toggled on
+
+step 101:
+
+step 102:
+router 1 toggled off
+router 6 toggled on
+
+step 103:
+router 1 toggled on
+router 2 toggled on
+router 3 toggled off
+
+step 104:
+router 1 toggled off
+router 4 toggled off
+router 5 toggled off
+
+step 105:
+
+step 106:
+router 1 toggled on
+router 3 toggled on
+
+step 107:
+router 2 toggled off
+
+step 108:
+
+step 109:
+router 3 toggled off
+
+step 110:
+router 1 toggled off
+router 2 toggled on
+
+step 111:
+
+step 112:
+router 3 toggled on
+
+step 113:
+link between 3 and 4 toggled off
+
+step 114:
+
+step 115:
+router 1 toggled on
+router 4 toggled on
+
+step 116:
+link between 2 and 7 toggled on
+router 4 toggled off
+
+step 117:
+Packet 11 transmitted from router 0 to router 1.
+
+step 118:
+router 1 toggled off
+router 2 toggled off
+Packet 11 lost due link failure.
+
+step 119:
+router 2 toggled on
+router 4 toggled on
+
+step 120:
+router 3 toggled off
+
+step 121:
+router 3 toggled on
+
+step 122:
+router 4 toggled off
+
+step 123:
+router 1 toggled on
+Packet 6 transmitted from router 0 to router 1.
+
+step 124:
+router 1 toggled off
+Packet 6 lost due link failure.
+
+step 125:
+router 2 toggled off
+router 4 toggled on
+
+1 out of 12 packets successfully transmitted.
+The average transmission time was 10 ticks.

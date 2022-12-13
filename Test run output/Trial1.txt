@@ -1,0 +1,194 @@
+step 0:
+Created packet 1
+
+step 1:
+Packet 1 transmitted from router 0 to router 3.
+
+step 2:
+Packet 1 transmitted from router 3 to router 4.
+
+step 3:
+Packet 1 transmitted from router 4 to router 7.
+Packet 1 of size 1037 bytes reached final destination and took 6 ticks to transmit.
+
+step 4:
+link between 1 and 2 toggled on
+
+step 5:
+Created packet 2
+
+step 6:
+Packet 2 transmitted from router 0 to router 3.
+
+step 7:
+Packet 2 transmitted from router 3 to router 4.
+
+step 8:
+Packet 2 transmitted from router 4 to router 7.
+Packet 2 of size 956 bytes reached final destination and took 6 ticks to transmit.
+
+step 9:
+link between 3 and 4 toggled on
+
+step 10:
+Created packet 3
+
+step 11:
+Packet 3 transmitted from router 0 to router 1.
+
+step 12:
+Packet 3 transmitted from router 1 to router 4.
+
+step 13:
+Packet 3 transmitted from router 4 to router 7.
+Packet 3 of size 953 bytes reached final destination and took 6 ticks to transmit.
+Packet 3 requires an ACK.
+
+step 14:
+Packet 0 transmitted from router 7 to router 4.
+
+step 15:
+Created packet 4
+
+step 16:
+Packet 4 transmitted from router 0 to router 1.
+Packet 0 transmitted from router 4 to router 1.
+
+step 17:
+Packet 4 transmitted from router 1 to router 4.
+
+step 18:
+Packet 4 transmitted from router 4 to router 2.
+
+step 19:
+Packet 0 transmitted from router 1 to router 0.
+Packet 0 of size 1 bytes reached final destination and took 6 ticks to transmit.
+
+step 20:
+Created packet 5
+Packet 4 transmitted from router 2 to router 7.
+Packet 4 of size 604 bytes reached final destination and took 8 ticks to transmit.
+
+step 21:
+Packet 5 transmitted from router 0 to router 1.
+
+step 22:
+Packet 5 transmitted from router 1 to router 4.
+
+step 23:
+Packet 5 transmitted from router 4 to router 2.
+
+step 24:
+
+step 25:
+Created packet 6
+Packet 5 transmitted from router 2 to router 7.
+Packet 5 of size 1150 bytes reached final destination and took 8 ticks to transmit.
+Packet 5 requires an ACK.
+
+step 26:
+Packet 6 transmitted from router 0 to router 1.
+Packet 0 transmitted from router 7 to router 4.
+
+step 27:
+Packet 6 transmitted from router 1 to router 4.
+
+step 28:
+Packet 0 transmitted from router 4 to router 1.
+
+step 29:
+
+step 30:
+Created packet 7
+Packet 0 transmitted from router 1 to router 0.
+Packet 0 of size 1 bytes reached final destination and took 6 ticks to transmit.
+Packet 6 transmitted from router 4 to router 7.
+Packet 6 of size 1221 bytes reached final destination and took 6 ticks to transmit.
+
+step 31:
+Packet 7 transmitted from router 0 to router 3.
+
+step 32:
+Packet 7 transmitted from router 3 to router 1.
+
+step 33:
+
+step 34:
+Packet 7 transmitted from router 1 to router 4.
+
+step 35:
+Created packet 8
+Packet 7 transmitted from router 4 to router 7.
+Packet 7 of size 700 bytes reached final destination and took 8 ticks to transmit.
+
+step 36:
+Packet 8 transmitted from router 0 to router 1.
+
+step 37:
+Packet 8 transmitted from router 1 to router 4.
+
+step 38:
+link between 3 and 4 toggled on
+Packet 8 transmitted from router 4 to router 7.
+Packet 8 of size 648 bytes reached final destination and took 6 ticks to transmit.
+
+step 39:
+
+step 40:
+Created packet 9
+
+step 41:
+Packet 9 transmitted from router 0 to router 3.
+
+step 42:
+Packet 9 transmitted from router 3 to router 4.
+
+step 43:
+Packet 9 transmitted from router 4 to router 7.
+Packet 9 of size 1406 bytes reached final destination and took 6 ticks to transmit.
+Packet 9 requires an ACK.
+
+step 44:
+Packet 0 transmitted from router 7 to router 4.
+
+step 45:
+Created packet 10
+
+step 46:
+link between 0 and 5 toggled on
+Packet 10 transmitted from router 0 to router 3.
+Packet 0 transmitted from router 4 to router 3.
+
+step 47:
+Packet 10 transmitted from router 3 to router 4.
+
+step 48:
+Packet 10 transmitted from router 4 to router 7.
+Packet 10 of size 1367 bytes reached final destination and took 6 ticks to transmit.
+Packet 10 requires an ACK.
+
+step 49:
+Packet 0 transmitted from router 3 to router 0.
+Packet 0 of size 1 bytes reached final destination and took 6 ticks to transmit.
+Packet 0 transmitted from router 7 to router 4.
+
+step 50:
+Created packet 11
+
+step 51:
+Packet 11 transmitted from router 0 to router 3.
+Packet 0 transmitted from router 4 to router 3.
+
+step 52:
+Packet 11 transmitted from router 3 to router 4.
+
+step 53:
+Packet 11 transmitted from router 4 to router 7.
+Packet 11 of size 420 bytes reached final destination and took 6 ticks to transmit.
+
+step 54:
+Packet 0 transmitted from router 3 to router 0.
+Packet 0 of size 1 bytes reached final destination and took 6 ticks to transmit.
+
+15 out of 15 packets successfully transmitted.
+The average transmission time was 6.4 ticks.
