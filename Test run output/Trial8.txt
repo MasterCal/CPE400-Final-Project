@@ -1,0 +1,992 @@
+step 0:
+router 2 toggled off
+Created packet 1
+
+step 1:
+router 2 toggled on
+router 3 toggled off
+router 4 toggled off
+Packet 1 transmitted from router 0 to router 1.
+
+step 2:
+Packet 1 transmitted from router 1 to router 2.
+
+step 3:
+Packet 1 transmitted from router 2 to router 7.
+Packet 1 of size 244 bytes reached final destination and took 6 ticks to transmit.
+
+step 4:
+router 2 toggled off
+router 4 toggled on
+
+step 5:
+Created packet 2
+
+step 6:
+link between 0 and 5 toggled off
+router 1 toggled off
+router 4 toggled off
+
+step 7:
+router 1 toggled on
+link between 3 and 4 toggled off
+
+step 8:
+router 1 toggled off
+
+step 9:
+router 3 toggled on
+router 5 toggled off
+
+step 10:
+link between 0 and 3 toggled off
+Created packet 3
+
+step 11:
+router 3 toggled off
+
+step 12:
+router 2 toggled on
+
+step 13:
+router 4 toggled on
+
+step 14:
+router 1 toggled on
+Packet 2 transmitted from router 0 to router 1.
+
+step 15:
+router 2 toggled off
+Created packet 4
+Packet 2 transmitted from router 1 to router 4.
+
+step 16:
+router 2 toggled on
+Packet 3 transmitted from router 0 to router 1.
+Packet 2 transmitted from router 4 to router 7.
+Packet 2 of size 137 bytes reached final destination and took 12 ticks to transmit.
+
+step 17:
+Packet 3 transmitted from router 1 to router 4.
+
+step 18:
+Packet 4 transmitted from router 0 to router 1.
+Packet 3 transmitted from router 4 to router 7.
+Packet 3 of size 549 bytes reached final destination and took 8 ticks to transmit.
+Packet 3 requires an ACK.
+
+step 19:
+link between 0 and 3 toggled on
+Packet 4 transmitted from router 1 to router 4.
+Packet 0 transmitted from router 7 to router 4.
+
+step 20:
+router 3 toggled on
+Created packet 5
+Packet 4 transmitted from router 4 to router 7.
+Packet 4 of size 614 bytes reached final destination and took 6 ticks to transmit.
+
+step 21:
+Packet 5 transmitted from router 0 to router 1.
+
+step 22:
+router 3 toggled off
+router 4 toggled off
+Packet 5 transmitted from router 1 to router 2.
+Packet 0 lost due link failure.
+
+step 23:
+router 2 toggled off
+router 4 toggled on
+Packet 5 lost due link failure.
+
+step 24:
+link between 0 and 1 toggled off
+router 2 toggled on
+
+step 25:
+router 2 toggled off
+router 6 toggled off
+Created packet 6
+
+step 26:
+router 6 toggled on
+
+step 27:
+router 5 toggled on
+router 6 toggled off
+
+step 28:
+router 2 toggled on
+router 4 toggled off
+router 6 toggled on
+
+step 29:
+router 2 toggled off
+router 4 toggled on
+
+step 30:
+router 2 toggled on
+router 4 toggled off
+Created packet 7
+
+step 31:
+router 1 toggled off
+
+step 32:
+router 1 toggled on
+router 5 toggled off
+
+step 33:
+router 1 toggled off
+router 5 toggled on
+router 6 toggled off
+
+step 34:
+router 2 toggled off
+router 4 toggled on
+
+step 35:
+router 3 toggled on
+Created packet 8
+
+step 36:
+router 1 toggled on
+router 4 toggled off
+
+step 37:
+router 1 toggled off
+
+step 38:
+
+step 39:
+router 3 toggled off
+
+step 40:
+router 1 toggled on
+Created packet 9
+
+step 41:
+
+step 42:
+router 2 toggled on
+router 4 toggled on
+
+step 43:
+router 3 toggled on
+
+step 44:
+router 3 toggled off
+
+step 45:
+router 1 toggled off
+router 4 toggled off
+Created packet 10
+
+step 46:
+
+step 47:
+router 3 toggled on
+
+step 48:
+router 4 toggled on
+
+step 49:
+link between 0 and 3 toggled off
+router 1 toggled on
+router 3 toggled off
+
+step 50:
+router 4 toggled off
+Created packet 11
+
+step 51:
+router 1 toggled off
+router 4 toggled on
+
+step 52:
+
+step 53:
+router 2 toggled off
+router 3 toggled on
+
+step 54:
+
+step 55:
+
+step 56:
+router 2 toggled on
+router 4 toggled off
+
+step 57:
+
+step 58:
+router 1 toggled on
+router 2 toggled off
+
+step 59:
+router 1 toggled off
+router 2 toggled on
+
+step 60:
+router 1 toggled on
+router 3 toggled off
+router 6 toggled on
+
+step 61:
+router 3 toggled on
+
+step 62:
+router 2 toggled off
+router 4 toggled on
+
+step 63:
+router 3 toggled off
+
+step 64:
+router 1 toggled off
+
+step 65:
+
+step 66:
+
+step 67:
+link between 1 and 2 toggled off
+router 2 toggled on
+router 3 toggled on
+router 4 toggled off
+
+step 68:
+router 2 toggled off
+
+step 69:
+router 2 toggled on
+
+step 70:
+router 2 toggled off
+
+step 71:
+
+step 72:
+router 2 toggled on
+router 3 toggled off
+
+step 73:
+
+step 74:
+router 1 toggled on
+
+step 75:
+router 2 toggled off
+router 4 toggled on
+
+step 76:
+router 3 toggled on
+router 4 toggled off
+
+step 77:
+
+step 78:
+router 1 toggled off
+router 3 toggled off
+
+step 79:
+router 1 toggled on
+
+step 80:
+router 2 toggled on
+router 4 toggled on
+
+step 81:
+router 6 toggled off
+
+step 82:
+router 2 toggled off
+
+step 83:
+router 4 toggled off
+
+step 84:
+
+step 85:
+router 4 toggled on
+
+step 86:
+router 3 toggled on
+router 4 toggled off
+
+step 87:
+router 2 toggled on
+
+step 88:
+router 4 toggled on
+
+step 89:
+router 2 toggled off
+router 4 toggled off
+
+step 90:
+router 4 toggled on
+
+step 91:
+router 3 toggled off
+
+step 92:
+router 3 toggled on
+
+step 93:
+router 2 toggled on
+
+step 94:
+router 3 toggled off
+
+step 95:
+router 1 toggled off
+
+step 96:
+
+step 97:
+router 1 toggled on
+
+step 98:
+router 2 toggled off
+router 3 toggled on
+
+step 99:
+
+step 100:
+router 1 toggled off
+router 2 toggled on
+router 6 toggled on
+
+step 101:
+
+step 102:
+link between 2 and 7 toggled off
+router 3 toggled off
+
+step 103:
+
+step 104:
+router 1 toggled on
+router 2 toggled off
+
+step 105:
+
+step 106:
+router 1 toggled off
+router 3 toggled on
+
+step 107:
+
+step 108:
+router 2 toggled on
+
+step 109:
+router 2 toggled off
+router 4 toggled off
+
+step 110:
+router 1 toggled on
+
+step 111:
+router 2 toggled on
+
+step 112:
+router 3 toggled off
+
+step 113:
+router 2 toggled off
+router 4 toggled on
+
+step 114:
+router 2 toggled on
+
+step 115:
+
+step 116:
+router 3 toggled on
+router 5 toggled off
+
+step 117:
+router 3 toggled off
+
+step 118:
+router 1 toggled off
+link between 6 and 7 toggled off
+
+step 119:
+router 2 toggled off
+router 3 toggled on
+router 4 toggled off
+
+step 120:
+
+step 121:
+router 1 toggled on
+router 3 toggled off
+router 4 toggled on
+
+step 122:
+
+step 123:
+
+step 124:
+router 1 toggled off
+router 6 toggled off
+
+step 125:
+
+step 126:
+router 1 toggled on
+router 4 toggled off
+
+step 127:
+router 1 toggled off
+router 3 toggled on
+
+step 128:
+link between 0 and 1 toggled on
+router 4 toggled on
+link between 6 and 7 toggled on
+
+step 129:
+link between 0 and 1 toggled off
+router 1 toggled on
+router 4 toggled off
+
+step 130:
+router 2 toggled on
+router 3 toggled off
+
+step 131:
+router 2 toggled off
+router 3 toggled on
+
+step 132:
+link between 2 and 7 toggled on
+router 3 toggled off
+
+step 133:
+router 4 toggled on
+
+step 134:
+
+step 135:
+router 2 toggled on
+router 4 toggled off
+
+step 136:
+router 1 toggled off
+router 2 toggled off
+router 4 toggled on
+
+step 137:
+router 3 toggled on
+link between 6 and 7 toggled off
+
+step 138:
+router 2 toggled on
+router 3 toggled off
+
+step 139:
+router 1 toggled on
+router 6 toggled on
+
+step 140:
+router 2 toggled off
+
+step 141:
+router 4 toggled off
+
+step 142:
+router 1 toggled off
+router 2 toggled on
+
+step 143:
+router 1 toggled on
+
+step 144:
+
+step 145:
+router 3 toggled on
+router 4 toggled on
+
+step 146:
+link between 2 and 4 toggled off
+router 3 toggled off
+
+step 147:
+router 3 toggled on
+router 4 toggled off
+
+step 148:
+
+step 149:
+router 1 toggled off
+
+step 150:
+router 1 toggled on
+router 2 toggled off
+router 4 toggled on
+
+step 151:
+
+step 152:
+router 1 toggled off
+
+step 153:
+router 3 toggled off
+
+step 154:
+router 4 toggled off
+
+step 155:
+
+step 156:
+router 1 toggled on
+router 4 toggled on
+
+step 157:
+
+step 158:
+router 3 toggled on
+
+step 159:
+link between 2 and 4 toggled on
+
+step 160:
+router 2 toggled on
+
+step 161:
+router 3 toggled off
+
+step 162:
+router 2 toggled off
+
+step 163:
+
+step 164:
+router 4 toggled off
+
+step 165:
+
+step 166:
+router 1 toggled off
+
+step 167:
+
+step 168:
+router 1 toggled on
+router 3 toggled on
+
+step 169:
+router 3 toggled off
+
+step 170:
+router 3 toggled on
+router 6 toggled off
+
+step 171:
+router 2 toggled on
+
+step 172:
+router 1 toggled off
+router 2 toggled off
+router 3 toggled off
+
+step 173:
+router 1 toggled on
+router 2 toggled on
+
+step 174:
+router 5 toggled on
+
+step 175:
+
+step 176:
+router 4 toggled on
+
+step 177:
+router 2 toggled off
+
+step 178:
+router 6 toggled on
+
+step 179:
+router 1 toggled off
+router 2 toggled on
+link between 3 and 4 toggled on
+router 4 toggled off
+
+step 180:
+router 1 toggled on
+
+step 181:
+
+step 182:
+router 4 toggled on
+
+step 183:
+
+step 184:
+
+step 185:
+
+step 186:
+router 4 toggled off
+
+step 187:
+router 2 toggled off
+router 4 toggled on
+
+step 188:
+router 4 toggled off
+
+step 189:
+router 1 toggled off
+
+step 190:
+router 3 toggled on
+
+step 191:
+router 4 toggled on
+
+step 192:
+router 3 toggled off
+router 4 toggled off
+
+step 193:
+router 3 toggled on
+
+step 194:
+router 3 toggled off
+
+step 195:
+router 2 toggled on
+router 3 toggled on
+router 4 toggled on
+
+step 196:
+router 1 toggled on
+router 2 toggled off
+
+step 197:
+router 1 toggled off
+link between 6 and 7 toggled on
+
+step 198:
+router 3 toggled off
+
+step 199:
+router 1 toggled on
+router 3 toggled on
+
+step 200:
+router 4 toggled off
+link between 5 and 6 toggled off
+
+step 201:
+router 4 toggled on
+
+step 202:
+router 4 toggled off
+
+step 203:
+router 1 toggled off
+router 2 toggled on
+
+step 204:
+
+step 205:
+router 2 toggled off
+
+step 206:
+router 2 toggled on
+
+step 207:
+router 3 toggled off
+
+step 208:
+link between 1 and 2 toggled on
+router 2 toggled off
+router 3 toggled on
+router 6 toggled off
+
+step 209:
+router 2 toggled on
+router 3 toggled off
+router 6 toggled on
+
+step 210:
+router 1 toggled on
+router 2 toggled off
+router 3 toggled on
+
+step 211:
+
+step 212:
+router 1 toggled off
+
+step 213:
+
+step 214:
+router 2 toggled on
+
+step 215:
+router 4 toggled on
+
+step 216:
+router 1 toggled on
+router 5 toggled off
+
+step 217:
+link between 0 and 3 toggled on
+router 1 toggled off
+router 2 toggled off
+router 4 toggled off
+
+step 218:
+router 3 toggled off
+
+step 219:
+router 1 toggled on
+
+step 220:
+
+step 221:
+
+step 222:
+router 1 toggled off
+
+step 223:
+router 2 toggled on
+
+step 224:
+router 2 toggled off
+router 4 toggled on
+
+step 225:
+router 2 toggled on
+router 3 toggled on
+
+step 226:
+router 2 toggled off
+router 4 toggled off
+
+step 227:
+
+step 228:
+router 4 toggled on
+Packet 11 transmitted from router 0 to router 3.
+
+step 229:
+router 2 toggled on
+Packet 11 transmitted from router 3 to router 4.
+
+step 230:
+router 1 toggled on
+Packet 7 transmitted from router 0 to router 3.
+Packet 11 transmitted from router 4 to router 7.
+Packet 11 of size 987 bytes reached final destination and took 34 ticks to transmit.
+Packet 11 requires an ACK.
+
+step 231:
+Packet 7 transmitted from router 3 to router 1.
+Packet 0 transmitted from router 7 to router 4.
+
+step 232:
+router 1 toggled off
+router 6 toggled off
+Packet 6 transmitted from router 0 to router 3.
+
+step 233:
+Packet 7 lost due link failure.
+Packet 6 transmitted from router 3 to router 4.
+Packet 0 transmitted from router 4 to router 3.
+
+step 234:
+link between 1 and 4 toggled off
+router 3 toggled off
+
+step 235:
+router 1 toggled on
+Packet 0 lost due link failure.
+Packet 6 transmitted from router 4 to router 7.
+Packet 6 of size 1244 bytes reached final destination and took 48 ticks to transmit.
+Packet 6 requires an ACK.
+
+step 236:
+router 4 toggled off
+
+step 237:
+link between 0 and 5 toggled on
+
+step 238:
+
+step 239:
+router 2 toggled off
+router 3 toggled on
+
+step 240:
+
+step 241:
+link between 1 and 2 toggled off
+
+step 242:
+router 1 toggled off
+router 2 toggled on
+
+step 243:
+router 1 toggled on
+router 6 toggled on
+
+step 244:
+router 1 toggled off
+router 2 toggled off
+
+step 245:
+router 1 toggled on
+
+step 246:
+link between 0 and 5 toggled off
+
+step 247:
+router 4 toggled on
+
+step 248:
+router 1 toggled off
+Packet 9 transmitted from router 0 to router 3.
+Packet 0 transmitted from router 7 to router 4.
+
+step 249:
+router 4 toggled off
+
+step 250:
+Packet 0 lost due link failure.
+
+step 251:
+router 3 toggled off
+Packet 9 lost due link failure.
+
+step 252:
+router 3 toggled on
+
+step 253:
+
+step 254:
+router 1 toggled on
+
+step 255:
+
+step 256:
+router 6 toggled off
+
+step 257:
+router 4 toggled on
+
+step 258:
+router 4 toggled off
+
+step 259:
+router 3 toggled off
+
+step 260:
+
+step 261:
+router 2 toggled on
+
+step 262:
+router 1 toggled off
+
+step 263:
+
+step 264:
+
+step 265:
+router 1 toggled on
+
+step 266:
+router 3 toggled on
+
+step 267:
+router 1 toggled off
+router 2 toggled off
+router 3 toggled off
+
+step 268:
+router 1 toggled on
+router 3 toggled on
+
+step 269:
+router 3 toggled off
+router 4 toggled on
+router 5 toggled on
+
+step 270:
+router 3 toggled on
+router 4 toggled off
+
+step 271:
+router 2 toggled on
+router 5 toggled off
+
+step 272:
+link between 1 and 3 toggled off
+router 2 toggled off
+
+step 273:
+router 2 toggled on
+
+step 274:
+router 1 toggled off
+
+step 275:
+router 2 toggled off
+
+step 276:
+router 3 toggled off
+
+step 277:
+
+step 278:
+
+step 279:
+router 1 toggled on
+router 6 toggled on
+
+step 280:
+router 4 toggled on
+
+step 281:
+router 4 toggled off
+
+step 282:
+router 3 toggled on
+
+step 283:
+
+step 284:
+router 4 toggled on
+Packet 10 transmitted from router 0 to router 3.
+
+step 285:
+router 1 toggled off
+Packet 10 transmitted from router 3 to router 4.
+
+step 286:
+link between 0 and 5 toggled on
+router 2 toggled on
+Packet 8 transmitted from router 0 to router 3.
+Packet 10 transmitted from router 4 to router 7.
+Packet 10 of size 718 bytes reached final destination and took 58 ticks to transmit.
+
+step 287:
+Packet 8 transmitted from router 3 to router 4.
+
+step 288:
+Packet 8 transmitted from router 4 to router 7.
+Packet 8 of size 266 bytes reached final destination and took 62 ticks to transmit.
+
+8 out of 14 packets successfully transmitted.
+The average transmission time was 29.25 ticks.
